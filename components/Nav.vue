@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <NuxtLink class="h2size element clickable" to="/about">About</NuxtLink>
+      <NuxtLink class="h2size element clickable" to="/">About</NuxtLink>
       <h1 class="element">KAN</h1>
       <button class="h2size element clickable">Arrange by</button>
     </nav>
