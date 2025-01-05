@@ -1,11 +1,11 @@
 <template>
   <div>
-    <img :src="props.data" />
+    <img :src="data" />
   </div>
 </template>
 
 <script lang="ts" setup>
-const props = defineProps(["data"]);
+defineProps(["data"]);
 </script>
 
 <style scoped>

@@ -31,7 +31,7 @@ nav {
   justify-self: end;
 }
 
-.clickable:hover {
-  text-decoration: underline;
+a {
+  user-select: none;
 }
 </style>

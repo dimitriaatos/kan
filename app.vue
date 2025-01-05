@@ -46,8 +46,16 @@ h5 {
 }
 
 button,
-a,
 img {
   user-select: none;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.clickable:hover {
+  text-decoration: underline;
 }
 </style>
