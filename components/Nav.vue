@@ -1,14 +1,22 @@
 <template>
   <div>
     <nav>
-      <NuxtLink class="h2size element clickable" to="/">About</NuxtLink>
+      <span class="element">
+        <NuxtLink v-if="isHome" class="h2size clickable" to="/">About</NuxtLink>
+        <NuxtLink v-else class="h2size clickable" to="/">Archive</NuxtLink>
+      </span>
       <h1 class="element">KAN</h1>
-      <button class="h2size element clickable">Arrange by</button>
+      <span class="element">
+        <button v-if="isHome" class="h2size clickable">Arrange by</button>
+      </span>
     </nav>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const route = useRoute();
+const isHome = computed(() => route.path === "/");
+</script>
 
 <style scoped>
 nav {
