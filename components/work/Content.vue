@@ -57,8 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { capitalizeFirstLetter } from "~/assets/common";
-import type { ArchiveElementNoImage } from "~/assets/schema";
+import type { ArchiveElementNoImage } from "~/schema";
 
 const props = defineProps<{
   preview: boolean;

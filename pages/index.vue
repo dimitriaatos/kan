@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { parseWorks } from "~/assets/archive";
-import { archiveQuery, archiveSchema } from "~/assets/schema";
+import { archiveQuery, archiveSchema } from "~/schema";
 import { z } from "zod";
 
 const { $directus } = useNuxtApp();

@@ -2,7 +2,9 @@
   <div>
     <nav>
       <span class="element">
-        <NuxtLink v-if="isHome" class="h2size clickable" to="/">About</NuxtLink>
+        <NuxtLink v-if="isHome" class="h2size clickable" to="/about"
+          >About</NuxtLink
+        >
         <NuxtLink v-else class="h2size clickable" to="/">Archive</NuxtLink>
       </span>
       <h1 class="element">KAN</h1>

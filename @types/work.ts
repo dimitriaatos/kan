@@ -1,5 +1,5 @@
 import { ColumnType } from "~/assets/common";
-import type { ArchiveElementNoImage } from "~/assets/schema/archive";
+import type { ArchiveElementNoImage } from "~/schema/archive";
 
 type WorkColumn =
   | { type: ColumnType.Image; src: string }

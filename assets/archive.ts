@@ -1,6 +1,6 @@
 import type { WorkColumns } from "~/@types/work";
 import { ColumnType, prependAssetURI } from "~/assets/common";
-import type { Archive } from "~/assets/schema";
+import type { Archive } from "~/schema";
 
 export const parseWorks = (works: Archive): WorkColumns[] =>
   works.map((work, index) => {

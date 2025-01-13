@@ -9,7 +9,7 @@ import {
   archiveBySlugQuery,
   archiveElementSchema,
   type Archive,
-} from "~/assets/schema";
+} from "~/schema";
 import { z } from "zod";
 import { parseWorks } from "~/assets/archive";
 

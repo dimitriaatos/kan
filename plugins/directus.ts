@@ -1,5 +1,5 @@
 import { createDirectus, graphql, staticToken } from "@directus/sdk";
-import type { Schema } from "~/assets/schema";
+import type { Schema } from "~/schema";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
