@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <article v-for="work in parsedWorks" class="work">
-      <Work :work="work" :preview="true" />
-    </article>
-  </div>
+  <article v-for="work in parsedWorks" class="work">
+    <Work :work="work" :preview="true" />
+  </article>
 </template>
 
 <script lang="ts" setup>
@@ -33,5 +31,6 @@ const parsedWorks = computed(() => parseWorks(archive.value));
   border-bottom: 1px solid black;
   flex: 1 1 0px;
   gap: 1em;
+  height: 30vw;
 }
 </style>

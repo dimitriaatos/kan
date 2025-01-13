@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <img :src="src" />
-  </div>
+  <img :src="src" />
 </template>
 
 <script lang="ts" setup>
@@ -10,6 +8,8 @@ defineProps<{ src: string }>();
 
 <style scoped>
 img {
+  object-fit: contain;
   width: 100%;
+  height: 100%;
 }
 </style>
