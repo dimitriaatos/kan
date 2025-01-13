@@ -15,7 +15,7 @@ module.exports = {
 			ref: 'origin/main',
 			repo: 'https://github.com/dimitriaatos/kan.git',
 			path: '/home/dimitriaatos/sites/kan/front',
-			'pre-deploy-local': 'rsync -v --mkpath ./.env.production dimitriaatos@grain:/home/dimitriaatos/sites/kan/front/current/.env.production',
+			'pre-deploy-local': 'rsync -v --mkpath ./.env.production dimitriaatos@grain:/home/dimitriaatos/sites/kan/front/current/.env',
 			'post-deploy': 'source ~/.nvm/nvm.sh && pnpm i && pnpm generate && pm2 reload ecosystem.config.cjs --env production',
 			'ssh-options': 'ForwardAgent=yes'
 		}
