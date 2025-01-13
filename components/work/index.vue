@@ -8,14 +8,18 @@
       :data="column.data"
       :preview="preview"
     />
-    <WorkImage v-if="column.type === ColumnType.Image" :data="column.data" />
+    <WorkImage v-if="column.type === ColumnType.Image" :src="column.src" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import type { WorkColumns } from "~/@types/work";
 import { ColumnType } from "~/assets/common";
 
-defineProps(["work", "preview"]);
+defineProps<{
+  preview: boolean;
+  work: WorkColumns;
+}>();
 </script>
 
 <style scoped>
@@ -24,7 +28,7 @@ defineProps(["work", "preview"]);
   padding: 3.5em 0;
 }
 
-.underlinePreview:hover >>> h2 {
+.underlinePreview:hover:deep(h2) {
   text-decoration: underline;
 }
 </style>

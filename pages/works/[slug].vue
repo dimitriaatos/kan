@@ -5,14 +5,30 @@
 </template>
 
 <script setup lang="ts">
-import { mockedWorks, works } from "@/assets/mockedData/works";
-const route = useRoute();
+import {
+  archiveBySlugQuery,
+  archiveElementSchema,
+  type Archive,
+} from "~/assets/schema";
+import { z } from "zod";
+import { parseWorks } from "~/assets/archive";
 
-const index = mockedWorks.findIndex((work) => {
-  return work.slug === route.params.slug;
+const { $directus } = useNuxtApp();
+const route = useRoute("slug");
+
+const { data } = await useAsyncData(route.params.slug as string, () => {
+  return $directus.query<{ archive_by_id: Archive[number] }>(
+    archiveBySlugQuery,
+    { slug: route.params.slug }
+  );
 });
 
-const work = works[index];
+const work = computed(() => {
+  const work = z
+    .object({ archive_by_id: archiveElementSchema })
+    .parse(data.value).archive_by_id;
+  return parseWorks([work])[0];
+});
 </script>
 
 <style scoped>

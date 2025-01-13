@@ -1,13 +1,27 @@
 <template>
   <div>
-    <article v-for="work in works" class="work">
+    <article v-for="work in parsedWorks" class="work">
       <Work :work="work" :preview="true" />
     </article>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { works } from "@/assets/mockedData/works";
+import { parseWorks } from "~/assets/archive";
+import { archiveQuery, archiveSchema } from "~/assets/schema";
+import { z } from "zod";
+
+const { $directus } = useNuxtApp();
+
+const { data } = await useAsyncData("archive", () => {
+  return $directus.query(archiveQuery);
+});
+
+const archive = computed(() => {
+  return z.object({ archive: archiveSchema }).parse(data.value).archive;
+});
+
+const parsedWorks = computed(() => parseWorks(archive.value));
 </script>
 
 <style scoped>

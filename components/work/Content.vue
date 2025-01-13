@@ -23,13 +23,33 @@
       <li v-for="(value, key) in metadata" :key="key">
         {{ key }}: {{ value }}
       </li>
-      <li>
+      <li v-if="data.team.length > 0">
+        Team:
+        <span
+          v-for="(collaborator, index) in data.team"
+          :key="collaborator.collaborators_id.id"
+        >
+          <NuxtLink
+            class="clickable"
+            target="_blank"
+            v-if="collaborator.collaborators_id.link"
+            :to="collaborator.collaborators_id.link"
+            >{{ collaborator.collaborators_id.name }}</NuxtLink
+          >
+          <span v-else>{{ collaborator.collaborators_id.name }}</span>
+          <span v-if="index + 1 !== data.team.length">, </span>
+        </span>
+      </li>
+      <li v-if="data.categories.length > 0">
         Tags:
-        <span v-for="(tag, index) in data.tags" :key="tag">
-          <NuxtLink class="tag clickable" :to="`works/${data.slug}`">{{
-            tag
+        <span
+          v-for="(category, index) in data.categories"
+          :key="category.categories_id.title"
+        >
+          <NuxtLink class="tag clickable" :to="`/`">{{
+            category.categories_id.title
           }}</NuxtLink>
-          <span v-if="index + 1 !== data.tags.length">, </span>
+          <span v-if="index + 1 !== data.categories.length">, </span>
         </span>
       </li>
     </ul>
@@ -38,20 +58,19 @@
 
 <script lang="ts" setup>
 import { capitalizeFirstLetter } from "~/assets/common";
+import type { ArchiveElementNoImage } from "~/assets/schema";
 
-const props = defineProps(["data", "preview"]);
-
-const metadataKeys = ["location", "year", "team"];
+const props = defineProps<{
+  preview: boolean;
+  data: ArchiveElementNoImage;
+}>();
 
 const metadata = Object.fromEntries(
-  Object.entries(props.data)
-    .filter(([key]) => metadataKeys.includes(key))
-    .map(([key, value]) => {
-      return [capitalizeFirstLetter(key), value];
-    })
+  [
+    ["Location", props.data.location],
+    ["Year", props.data.year],
+  ].filter(([key, value]) => value !== null)
 );
-
-console.log(props.data);
 </script>
 
 <style scoped lang="scss">
