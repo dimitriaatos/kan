@@ -1,7 +1,11 @@
 <template>
-  <article v-for="work in parsedWorks" class="work">
+  <NuxtLink
+    :to="`works/${archive[index].slug}`"
+    v-for="(work, index) in parsedWorks"
+    class="work"
+  >
     <Work :work="work" :preview="true" />
-  </article>
+  </NuxtLink>
 </template>
 
 <script lang="ts" setup>

@@ -7,8 +7,12 @@
 </template>
 
 <style>
+:root {
+  --padding: 2em;
+}
+
 body {
-  margin: 0 1em 1em 1em;
+  margin: 0 var(--padding) var(--padding) var(--padding);
   font-size: 15px;
   font-family: "Satoshi";
 }

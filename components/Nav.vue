@@ -24,9 +24,9 @@ const isHome = computed(() => route.path === "/");
 nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  height: 5em;
   align-items: center;
   border-bottom: solid black 1px;
+  padding: var(--padding) 0;
 }
 
 .element:first-child {

@@ -1,17 +1,5 @@
 <template>
-  <!-- TODO avoid double link content -->
-  <NuxtLink
-    v-if="preview"
-    :to="`works/${data.slug}`"
-    style="height: 100%; display: block"
-  >
-    <h2>{{ data.title }}</h2>
-    <section
-      :class="preview ? 'previewSection' : 'section'"
-      v-html="data.description"
-    />
-  </NuxtLink>
-  <div v-else>
+  <div>
     <h2>{{ data.title }}</h2>
     <section
       :class="preview ? 'previewSection' : 'section'"
@@ -75,7 +63,7 @@ const metadata = Object.fromEntries(
 <style scoped lang="scss">
 h2 {
   text-align: center;
-  margin-bottom: 1em;
+  margin-bottom: var(--padding);
 }
 .previewSection {
   text-align: left;

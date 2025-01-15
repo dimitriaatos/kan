@@ -4,6 +4,7 @@
       :condition="Boolean(record.link)"
       :to="record.link || ''"
       target="_blank"
+      :class="{ clickable: record.link }"
     >
       {{ record.year }} <span class="title">{{ record.title }}</span>
       {{ record.type }}
