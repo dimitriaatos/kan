@@ -2,7 +2,7 @@
   <NuxtLink
     :to="`works/${archive[index].slug}`"
     v-for="(work, index) in parsedWorks"
-    class="work"
+    class="work underlinePreview"
   >
     <Work :work="work" :preview="true" />
   </NuxtLink>
@@ -36,5 +36,9 @@ const parsedWorks = computed(() => parseWorks(archive.value));
   flex: 1 1 0px;
   gap: 1em;
   height: 30vw;
+}
+
+.underlinePreview:hover:deep(h2) {
+  text-decoration: underline;
 }
 </style>

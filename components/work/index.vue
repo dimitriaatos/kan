@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-for="column in work"
-    :class="{ column: true, underlinePreview: preview }"
-  >
+  <div v-for="column in work" class="column">
     <WorkContent
       v-if="column.type === ColumnType.Description"
       :data="column.data"
@@ -26,9 +23,5 @@ defineProps<{
 .column {
   flex: 1 1 0px;
   padding: 3.5em 0;
-}
-
-.underlinePreview:hover:deep(h2) {
-  text-decoration: underline;
 }
 </style>
