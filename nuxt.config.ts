@@ -12,6 +12,13 @@ export default defineNuxtConfig({
       routes: ["/"],
     },
   },
+  site: {
+    url: process.env.NUXT_SITE_URL,
+    name: process.env.NUXT_SITE_NAME,
+  },
+  robots: {
+    disallow: ["/cms"],
+  },
   runtimeConfig: {
     public: {
       NUXT_PUBLIC_CMS_TOKEN: process.env.NUXT_PUBLIC_CMS_TOKEN,
@@ -26,5 +33,5 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxt/fonts", "@unocss/nuxt"],
+  modules: ["@nuxt/fonts", "@unocss/nuxt", "@nuxtjs/sitemap", "@nuxtjs/robots"],
 });
