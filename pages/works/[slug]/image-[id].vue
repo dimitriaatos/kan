@@ -86,7 +86,17 @@ const edge = computed((): Edge => {
 });
 
 useHead({
-  title: `${data.value?.archive_by_id.title} | ${TITLE}`,
+  title: `${work.value.title} | ${TITLE}`,
+  meta: [
+    { hid: "og-title", property: "og:title", content: work.value.title },
+    {
+      hid: "og-image",
+      property: "og:image",
+      content: `${prependAssetURI(
+        work.value.images[Number(route.params.id)].directus_files_id.id
+      )}`,
+    },
+  ],
 });
 </script>
 

@@ -12,7 +12,7 @@ import {
 } from "~/schema";
 import { z } from "zod";
 import { getColumns } from "~/assets/archive";
-import { TITLE } from "~/assets/common";
+import { prependAssetURI, TITLE } from "~/assets/common";
 
 const { $directus } = useNuxtApp();
 const route = useRoute() as ReturnType<typeof useRoute> & {
@@ -36,7 +36,14 @@ const columns = computed(() => {
 });
 
 useHead({
-  title: `${data.value?.archive_by_id.title} | ${TITLE}`,
+  title: `${work.value.title} | ${TITLE}`,
+  meta: [
+    { property: "og:title", content: work.value.title },
+    {
+      property: "og:image",
+      content: `${prependAssetURI(work.value.images[0].directus_files_id.id)}`,
+    },
+  ],
 });
 </script>
 
