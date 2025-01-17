@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { z } from "zod";
-import { prependAssetURI } from "~/assets/common";
+import { prependAssetURI, TITLE } from "~/assets/common";
 import {
   archiveBySlugQuery,
   archiveElementSchema,
@@ -83,6 +83,10 @@ const edge = computed((): Edge => {
     : index < work.value.images.length - 1
     ? Edge.Middle
     : Edge.End;
+});
+
+useHead({
+  title: `${data.value?.archive_by_id.title} | ${TITLE}`,
 });
 </script>
 

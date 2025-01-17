@@ -12,6 +12,7 @@ import {
 } from "~/schema";
 import { z } from "zod";
 import { getColumns } from "~/assets/archive";
+import { TITLE } from "~/assets/common";
 
 const { $directus } = useNuxtApp();
 const route = useRoute() as ReturnType<typeof useRoute> & {
@@ -32,6 +33,10 @@ const work = computed(() => {
 
 const columns = computed(() => {
   return getColumns(work.value);
+});
+
+useHead({
+  title: `${data.value?.archive_by_id.title} | ${TITLE}`,
 });
 </script>
 

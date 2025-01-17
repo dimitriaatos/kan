@@ -45,7 +45,7 @@
 
 <script lang="ts" setup>
 import { z } from "zod";
-import { prependAssetURI } from "~/assets/common";
+import { prependAssetURI, TITLE } from "~/assets/common";
 import { aboutQuery, aboutSchema } from "~/schema";
 
 const { $directus } = useNuxtApp();
@@ -56,6 +56,10 @@ const { data } = await useAsyncData("about", () => {
 
 const about = computed(() => {
   return z.object({ about: aboutSchema }).parse(data.value).about;
+});
+
+useHead({
+  title: `About | ${TITLE}`,
 });
 </script>
 

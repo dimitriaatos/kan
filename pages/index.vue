@@ -12,6 +12,7 @@
 import { getColumns } from "~/assets/archive";
 import { archiveQuery, archiveSchema } from "~/schema";
 import { z } from "zod";
+import { TITLE } from "~/assets/common";
 
 const { $directus } = useNuxtApp();
 
@@ -26,6 +27,10 @@ const archive = computed(() => {
 const parsedWorks = computed(() =>
   archive.value.map((work, index) => getColumns(work, index))
 );
+
+useHead({
+  title: `Archive | ${TITLE}`,
+});
 </script>
 
 <style scoped>

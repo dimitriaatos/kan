@@ -13,3 +13,5 @@ export const prependAssetURI = (id: string): string => {
   const config = useRuntimeConfig();
   return `${config.public.NUXT_PUBLIC_CMS_URI}/assets/${id}`;
 };
+
+export const TITLE = "KAN";
