@@ -1,6 +1,6 @@
 <template>
   <div class="work">
-    <Work :work="work" :preview="false" />
+    <Work :columns="columns" :work="work" :preview="false" />
   </div>
 </template>
 
@@ -11,12 +11,14 @@ import {
   type Archive,
 } from "~/schema";
 import { z } from "zod";
-import { parseWorks } from "~/assets/archive";
+import { getColumns } from "~/assets/archive";
 
 const { $directus } = useNuxtApp();
-const route = useRoute("slug");
+const route = useRoute() as ReturnType<typeof useRoute> & {
+  params: { slug: string };
+};
 
-const { data } = await useAsyncData(route.params.slug as string, () => {
+const { data } = await useAsyncData(route.params.slug, () => {
   return $directus.query<{ archive_by_id: Archive[number] }>(
     archiveBySlugQuery,
     { slug: route.params.slug }
@@ -24,10 +26,12 @@ const { data } = await useAsyncData(route.params.slug as string, () => {
 });
 
 const work = computed(() => {
-  const work = z
-    .object({ archive_by_id: archiveElementSchema })
-    .parse(data.value).archive_by_id;
-  return parseWorks([work])[0];
+  return z.object({ archive_by_id: archiveElementSchema }).parse(data.value)
+    .archive_by_id;
+});
+
+const columns = computed(() => {
+  return getColumns(work.value);
 });
 </script>
 
@@ -40,5 +44,6 @@ const work = computed(() => {
   border-bottom: 1px solid black;
   flex: 1 1 0px;
   gap: 1em;
+  position: relative;
 }
 </style>

@@ -1,15 +1,15 @@
 <template>
   <NuxtLink
     :to="`works/${archive[index].slug}`"
-    v-for="(work, index) in parsedWorks"
+    v-for="(columns, index) in parsedWorks"
     class="work underlinePreview"
   >
-    <Work :work="work" :preview="true" />
+    <Work :columns="columns" :preview="true" , :work="archive[index]" />
   </NuxtLink>
 </template>
 
 <script lang="ts" setup>
-import { parseWorks } from "~/assets/archive";
+import { getColumns } from "~/assets/archive";
 import { archiveQuery, archiveSchema } from "~/schema";
 import { z } from "zod";
 
@@ -23,7 +23,9 @@ const archive = computed(() => {
   return z.object({ archive: archiveSchema }).parse(data.value).archive;
 });
 
-const parsedWorks = computed(() => parseWorks(archive.value));
+const parsedWorks = computed(() =>
+  archive.value.map((work, index) => getColumns(work, index))
+);
 </script>
 
 <style scoped>
