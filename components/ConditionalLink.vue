@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink v-if="condition" :to="to" :target="target">
+  <NuxtLink v-if="condition" :to="to" :target="target" class="link">
     <slot />
   </NuxtLink>
   <slot v-else />
@@ -9,4 +9,9 @@
 defineProps<{ condition: boolean; to: string; target?: string }>();
 </script>
 
-<style></style>
+<style scoped>
+.link:hover:deep(h2),
+.link:hover:deep(h3) {
+  text-decoration: underline;
+}
+</style>

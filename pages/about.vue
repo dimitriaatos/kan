@@ -15,16 +15,21 @@
     >
       <AboutRecord :records="about.publications" />
     </AboutSection>
-    <!-- <section v-if="about.collaborators.length > 0">
+    <section v-if="about.collaborators.length > 0" class="collaborators-parent">
       <h2>Collaborators</h2>
       <div class="collaborators">
         <div
-          v-for="collaborator in about.collaborators"
+          v-for="collaborator in [
+            ...about.collaborators,
+            ...about.collaborators,
+            ...about.collaborators,
+          ]"
           :key="collaborator.collaborators_id.id"
+          class="collaborator"
         >
           <ConditionalLink
             :condition="Boolean(collaborator.collaborators_id.link)"
-            :to="collaborator.collaborators_id.link || ''"
+            :to="collaborator.collaborators_id.link"
             target="_blank"
           >
             <img
@@ -32,11 +37,11 @@
               :src="prependAssetURI(collaborator.collaborators_id.image.id)"
               alt=""
             />
-            {{ collaborator.collaborators_id.name }}
+            <h3>{{ collaborator.collaborators_id.name }}</h3>
           </ConditionalLink>
         </div>
       </div>
-    </section> -->
+    </section>
     <AboutSection :condition="about.contact !== null" title="Contact">
       <div v-html="about.contact"></div>
     </AboutSection>
@@ -69,5 +74,35 @@ useHead({
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.collaborators-parent {
+  border-bottom: solid black 1px;
+  width: 100%;
+  padding: 1em 0;
+}
+
+.collaborators-parent h2 {
+  padding-bottom: 1em;
+}
+
+.collaborators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--padding);
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.collaborators img {
+  display: block;
+  aspect-ratio: 1/1;
+  width: 10em;
+  object-fit: contain;
+}
+
+.collaborator h3 {
+  text-align: center;
+  padding: 1em;
 }
 </style>
