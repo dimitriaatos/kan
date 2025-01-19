@@ -87,11 +87,19 @@ useHead({
 }
 
 .collaborators {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--padding);
+  display: grid;
+  grid-template-rows: repeat(1, 13em);
+  grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+  grid-gap: var(--padding);
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  justify-content: space-evenly;
+}
+
+.collaborator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .collaborators img {
