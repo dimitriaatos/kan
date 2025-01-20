@@ -33,5 +33,11 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxt/fonts", "@unocss/nuxt", "@nuxtjs/sitemap", "@nuxtjs/robots"],
+  modules: [
+    "@nuxt/fonts",
+    "@unocss/nuxt",
+    "@nuxtjs/sitemap",
+    "@nuxtjs/robots",
+    "@pinia/nuxt",
+  ],
 });

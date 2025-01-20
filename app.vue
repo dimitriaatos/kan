@@ -9,6 +9,7 @@
 <style>
 :root {
   --padding: 2em;
+  --half-padding: calc(var(--padding) / 2);
 }
 
 body {
@@ -57,10 +58,15 @@ img {
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .clickable:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.selected {
+  text-decoration: underline;
 }
 </style>

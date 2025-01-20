@@ -1,4 +1,5 @@
 <template>
+  <ArrangeBy v-if="isOpen" />
   <NuxtLink
     :to="`works/${archive[index].slug}`"
     v-for="(columns, index) in parsedWorks"
@@ -13,6 +14,9 @@ import { getColumns } from "~/assets/archive";
 import { archiveQuery, archiveSchema } from "~/schema";
 import { z } from "zod";
 import { TITLE } from "~/assets/common";
+
+const arrangeBy = useArrangeByStore();
+const { isOpen } = storeToRefs(arrangeBy);
 
 const { $directus } = useNuxtApp();
 

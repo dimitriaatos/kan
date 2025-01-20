@@ -9,7 +9,14 @@
       </span>
       <h1 class="element">KAN</h1>
       <span class="element">
-        <button v-if="isHome" class="h2size clickable">Arrange by</button>
+        <button
+          v-if="isHome"
+          @click="toggle"
+          class="h2size clickable"
+          :class="{ selected: isOpen }"
+        >
+          Arrange by
+        </button>
       </span>
     </nav>
   </div>
@@ -18,6 +25,9 @@
 <script lang="ts" setup>
 const route = useRoute();
 const isHome = computed(() => route.path === "/");
+const arrangeBy = useArrangeByStore();
+const { toggle } = arrangeBy;
+const { isOpen } = storeToRefs(arrangeBy);
 </script>
 
 <style scoped>
