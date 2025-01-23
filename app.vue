@@ -66,6 +66,13 @@ ul {
   cursor: pointer;
 }
 
+@media (hover: none) {
+  .clickable:hover {
+    text-decoration: none;
+    cursor: default;
+  }
+}
+
 .selected {
   text-decoration: underline;
 }

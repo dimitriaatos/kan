@@ -14,4 +14,11 @@ defineProps<{ condition: boolean; to: string; target?: string }>();
 .link:hover:deep(h3) {
   text-decoration: underline;
 }
+
+@media (hover: none) {
+  .link:hover:deep(h2),
+  .link:hover:deep(h3) {
+    text-decoration: none;
+  }
+}
 </style>

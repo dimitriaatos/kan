@@ -52,4 +52,10 @@ useHead({
 .underlinePreview:hover:deep(h2) {
   text-decoration: underline;
 }
+
+@media (hover: none) {
+  .underlinePreview:hover:deep(h2) {
+    text-decoration: none;
+  }
+}
 </style>
