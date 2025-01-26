@@ -2,18 +2,18 @@
   <div id="parent">
     <div id="overlay">
       <ConditionalLink
-        :class="{ left: edge !== Edge.Start }"
+        :class="{ left: !edges.includes(Edge.Start) }"
         class="goto"
         :to="`${route.params.type}-${index + Direction.Back}`"
-        :condition="edge !== Edge.Start"
+        :condition="!edges.includes(Edge.Start)"
       >
         <div class="goto" />
       </ConditionalLink>
       <ConditionalLink
-        :class="{ right: edge !== Edge.End }"
+        :class="{ right: !edges.includes(Edge.End) }"
         class="goto"
         :to="`${route.params.type}-${index + Direction.Forward}`"
-        :condition="edge !== Edge.End"
+        :condition="!edges.includes(Edge.End)"
       >
         <div class="goto" />
       </ConditionalLink>
@@ -75,16 +75,14 @@ enum Direction {
 
 enum Edge {
   Start,
-  Middle,
   End,
 }
 
-const edge = computed((): Edge => {
-  return index === 0
-    ? Edge.Start
-    : index < work.value[route.params.type].length - 1
-    ? Edge.Middle
-    : Edge.End;
+const edges = computed((): Edge[] => {
+  let value: Edge[] = new Array();
+  if (index === 0) value.push(Edge.Start);
+  if (index >= work.value[route.params.type].length - 1) value.push(Edge.End);
+  return value;
 });
 
 useHead({
