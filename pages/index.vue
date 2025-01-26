@@ -47,7 +47,7 @@ useHead({
   border-bottom: 1px solid black;
   flex: 1 1 0px;
   gap: 1em;
-  height: 30vw;
+  height: 30rem;
   overflow: hidden;
 }
 

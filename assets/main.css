@@ -4,8 +4,15 @@
   --accent: #329302;
 }
 
+html {
+	display: flex;
+	justify-content: center;
+}
+
 body {
   margin: 0 var(--padding) var(--padding) var(--padding);
+	max-width: 100rem;
+	width: 100%;
   font-size: 15px;
   font-family: "Satoshi";
 }
