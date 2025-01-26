@@ -17,6 +17,13 @@
       >
         <div class="goto" />
       </ConditionalLink>
+      <NuxtLink
+        :to="`/works/${route.params.slug}`"
+        id="close"
+        class="clickable"
+      >
+        <div />
+      </NuxtLink>
     </div>
     <div id="gallery">
       <img
@@ -101,7 +108,7 @@ useHead({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #parent {
   position: relative;
 }
@@ -122,14 +129,21 @@ useHead({
 }
 
 #close {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   aspect-ratio: 1/1;
-  border-radius: 50%;
-  background-color: rgb(255 0 0);
-  width: 1em;
+  width: 2em;
   position: absolute;
   right: 2vw;
   top: 1em;
+}
+
+#close > div {
+  background-color: rgb(255 0 0);
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
 }
 
 #overlay {
