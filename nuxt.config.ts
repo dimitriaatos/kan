@@ -25,6 +25,11 @@ export default defineNuxtConfig({
       NUXT_PUBLIC_CMS_URI: process.env.NUXT_PUBLIC_CMS_URI,
     },
   },
+  app: {
+    head: {
+      link: [{ rel: "icon", href: "/favicon.svg" }],
+    },
+  },
   css: ["@/assets/main.css"],
   fonts: {
     families: [{ name: "Satoshi", provider: "fontshare", weights: [300] }],
