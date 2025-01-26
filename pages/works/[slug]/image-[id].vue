@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { z } from "zod";
-import { prependAssetURI, TITLE } from "~/assets/common";
+import { getPageTitle, prependAssetURI, TITLE } from "~/assets/common";
 import {
   archiveBySlugQuery,
   archiveElementSchema,
@@ -86,7 +86,7 @@ const edge = computed((): Edge => {
 });
 
 useHead({
-  title: `${work.value.title} | ${TITLE}`,
+  title: getPageTitle(work.value.title),
   meta: [
     { hid: "og-title", property: "og:title", content: work.value.title },
     {

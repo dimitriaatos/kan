@@ -15,3 +15,7 @@ export const prependAssetURI = (id: string): string => {
 };
 
 export const TITLE = "KAN";
+
+export const getPageTitle = (title: string | null): string => {
+  return title === null ? TITLE : `${TITLE} | ${title}`;
+};

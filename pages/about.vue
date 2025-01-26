@@ -47,7 +47,7 @@
 
 <script lang="ts" setup>
 import { z } from "zod";
-import { prependAssetURI, TITLE } from "~/assets/common";
+import { getPageTitle, prependAssetURI, TITLE } from "~/assets/common";
 import { aboutQuery, aboutSchema } from "~/schema";
 
 const { $directus } = useNuxtApp();
@@ -61,7 +61,7 @@ const about = computed(() => {
 });
 
 useHead({
-  title: `About | ${TITLE}`,
+  title: getPageTitle("About"),
 });
 </script>
 

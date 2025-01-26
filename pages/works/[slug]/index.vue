@@ -12,7 +12,7 @@ import {
 } from "~/schema";
 import { z } from "zod";
 import { getColumns } from "~/assets/archive";
-import { prependAssetURI, TITLE } from "~/assets/common";
+import { getPageTitle, prependAssetURI } from "~/assets/common";
 
 const { $directus } = useNuxtApp();
 const route = useRoute() as ReturnType<typeof useRoute> & {
@@ -36,7 +36,7 @@ const columns = computed(() => {
 });
 
 useHead({
-  title: `${work.value.title} | ${TITLE}`,
+  title: getPageTitle(work.value.title),
   meta: [
     { property: "og:title", content: work.value.title },
     {
