@@ -25,6 +25,7 @@ export default defineNuxtConfig({
       NUXT_PUBLIC_CMS_URI: process.env.NUXT_PUBLIC_CMS_URI,
     },
   },
+  css: ["@/assets/main.css"],
   fonts: {
     families: [{ name: "Satoshi", provider: "fontshare", weights: [300] }],
     defaults: {
