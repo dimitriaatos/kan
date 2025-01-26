@@ -10,6 +10,7 @@
 :root {
   --padding: 2em;
   --half-padding: calc(var(--padding) / 2);
+  --accent: #329302;
 }
 
 body {
@@ -61,15 +62,10 @@ ul {
   margin: 0;
 }
 
-.clickable:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-@media (hover: none) {
+@media (hover: hover) {
   .clickable:hover {
-    text-decoration: none;
-    cursor: default;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 

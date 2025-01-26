@@ -10,15 +10,10 @@ defineProps<{ condition: boolean; to: string; target?: string }>();
 </script>
 
 <style scoped>
-.link:hover:deep(h2),
-.link:hover:deep(h3) {
-  text-decoration: underline;
-}
-
-@media (hover: none) {
+@media (hover: hover) {
   .link:hover:deep(h2),
   .link:hover:deep(h3) {
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 </style>

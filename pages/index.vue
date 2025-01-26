@@ -51,13 +51,14 @@ useHead({
   overflow: hidden;
 }
 
-.underlinePreview:hover:deep(h2) {
-  text-decoration: underline;
-}
-
-@media (hover: none) {
+@media (hover: hover) {
   .underlinePreview:hover:deep(h2) {
-    text-decoration: none;
+    text-decoration: underline;
+  }
+  .underlinePreview:hover:deep(p) {
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-decoration-color: var(--accent);
   }
 }
 </style>
