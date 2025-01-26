@@ -23,6 +23,7 @@ export const collaboratorSchema = z.object({
   name: z.string().nullable(),
   link: z.string().nullable(),
   image: imageSchema.nullable(),
+  description: z.string().nullable().optional(),
 });
 
 export type Collaborator = z.infer<typeof collaboratorSchema>;

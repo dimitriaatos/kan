@@ -35,6 +35,7 @@ export const aboutQuery = gql`
           id
           name
           link
+          description
           image {
             id
           }

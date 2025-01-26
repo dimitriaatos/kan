@@ -36,6 +36,7 @@
             />
             <h3>{{ collaborator.collaborators_id.name }}</h3>
           </ConditionalLink>
+          <div v-html="collaborator.collaborators_id.description" />
         </div>
       </div>
     </section>
@@ -47,7 +48,7 @@
 
 <script lang="ts" setup>
 import { z } from "zod";
-import { getPageTitle, prependAssetURI, TITLE } from "~/assets/common";
+import { getPageTitle, prependAssetURI } from "~/assets/common";
 import { aboutQuery, aboutSchema } from "~/schema";
 
 const { $directus } = useNuxtApp();
@@ -85,12 +86,18 @@ useHead({
 
 .collaborators {
   display: grid;
-  grid-template-rows: repeat(1, 13em);
-  grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+  grid-template-rows: fit-content(8ch);
+  grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
   grid-gap: var(--padding);
   justify-content: center;
-  align-items: center;
+  align-items: start;
   width: 100%;
+}
+
+@media (min-width: calc(calc(10em * 3) + 4em)) {
+  .collaborators {
+    grid-template-columns: repeat(3, minmax(10em, 1fr));
+  }
 }
 
 .collaborator {
