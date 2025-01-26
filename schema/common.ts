@@ -12,11 +12,11 @@ export const fileSchema = z.object({
 
 export type File = z.infer<typeof fileSchema>;
 
-export const categorySchema = z.object({
+export const typologySchema = z.object({
   title: z.string(),
 });
 
-export type Category = z.infer<typeof categorySchema>;
+export type Typology = z.infer<typeof typologySchema>;
 
 export const collaboratorSchema = z.object({
   id: z.string(),

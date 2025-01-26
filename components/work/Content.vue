@@ -28,16 +28,16 @@
           <span v-if="index + 1 !== data.team.length">, </span>
         </span>
       </li>
-      <li v-if="data.categories.length > 0">
+      <li v-if="data.typology.length > 0">
         Tags:
         <span
-          v-for="(category, index) in data.categories"
-          :key="category.categories_id.title"
+          v-for="(category, index) in data.typology"
+          :key="category.typology_id.title"
         >
           <NuxtLink class="tag clickable" :to="`/`">{{
-            category.categories_id.title
+            category.typology_id.title
           }}</NuxtLink>
-          <span v-if="index + 1 !== data.categories.length">, </span>
+          <span v-if="index + 1 !== data.typology.length">, </span>
         </span>
       </li>
     </ul>

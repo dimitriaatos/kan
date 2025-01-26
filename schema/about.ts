@@ -14,8 +14,8 @@ export type AboutRecord = z.infer<typeof aboutRecordSchema>;
 export const aboutSchema = z.object({
   about: z.string().nullable(),
   news: z.string().nullable(),
-  awards: aboutRecordSchema.array(),
-  publications: aboutRecordSchema.array(),
+  awards: z.string().nullable(),
+  publications: z.string().nullable(),
   contact: z.string().nullable(),
   collaborators: z.array(z.object({ collaborators_id: collaboratorSchema })),
 });

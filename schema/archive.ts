@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { categorySchema, collaboratorSchema, fileSchema } from "./common";
+import { typologySchema, collaboratorSchema, fileSchema } from "./common";
 import { gql } from "~/assets/common";
 
 export const archiveElementNoImageSchema = z.object({
@@ -8,7 +8,7 @@ export const archiveElementNoImageSchema = z.object({
   description: z.string().nullable(),
   location: z.string().nullable(),
   year: z.number().nullable(),
-  categories: z.array(z.object({ categories_id: categorySchema })),
+  typology: z.array(z.object({ typology_id: typologySchema })),
   team: z.array(z.object({ collaborators_id: collaboratorSchema })),
 });
 
@@ -17,6 +17,7 @@ export type ArchiveElementNoImage = z.infer<typeof archiveElementNoImageSchema>;
 export const archiveElementSchema = archiveElementNoImageSchema.merge(
   z.object({
     images: z.array(fileSchema),
+    drawings: z.array(fileSchema),
   })
 );
 
@@ -39,8 +40,13 @@ export const archiveQuery = gql`
           id
         }
       }
-      categories {
-        categories_id {
+      drawings {
+        directus_files_id {
+          id
+        }
+      }
+      typology {
+        typology_id {
           title
         }
       }
@@ -71,8 +77,13 @@ export const archiveBySlugQuery = gql`
           id
         }
       }
-      categories {
-        categories_id {
+      drawings {
+        directus_files_id {
+          id
+        }
+      }
+      typology {
+        typology_id {
           title
         }
       }

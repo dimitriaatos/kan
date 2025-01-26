@@ -14,6 +14,7 @@ import { getColumns } from "~/assets/archive";
 import { archiveQuery, archiveSchema } from "~/schema";
 import { z } from "zod";
 import { TITLE } from "~/assets/common";
+import { storeToRefs } from "pinia";
 
 const arrangeBy = useArrangeByStore();
 const { isOpen } = storeToRefs(arrangeBy);
@@ -47,6 +48,7 @@ useHead({
   flex: 1 1 0px;
   gap: 1em;
   height: 30vw;
+  overflow: hidden;
 }
 
 .underlinePreview:hover:deep(h2) {

@@ -6,14 +6,11 @@
     <AboutSection :condition="about.news !== null" title="News">
       <div v-html="about.news" />
     </AboutSection>
-    <AboutSection :condition="about.awards.length > 0" title="Awards">
-      <AboutRecord :records="about.awards" />
+    <AboutSection :condition="about.awards !== null" title="Awards">
+      <div v-html="about.awards" />
     </AboutSection>
-    <AboutSection
-      :condition="about.publications.length > 0"
-      title="Publications"
-    >
-      <AboutRecord :records="about.publications" />
+    <AboutSection :condition="about.publications !== null" title="Publications">
+      <div v-html="about.publications" />
     </AboutSection>
     <section v-if="about.collaborators.length > 0" class="collaborators-parent">
       <h2>Collaborators</h2>
@@ -29,7 +26,7 @@
         >
           <ConditionalLink
             :condition="Boolean(collaborator.collaborators_id.link)"
-            :to="collaborator.collaborators_id.link"
+            :to="collaborator.collaborators_id.link || ''"
             target="_blank"
           >
             <img

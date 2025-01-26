@@ -7,18 +7,25 @@ export const getColumns = (
   offset?: number
 ): WorkColumns => {
   const {
-    images: [image1, image2],
+    images: [image1],
+    drawings: [drawing1],
     ...data
   } = work;
 
   let columnData: WorkColumns = [
     { data, type: ColumnType.Description },
     {
-      src: prependAssetURI(image1.directus_files_id.id),
+      src:
+        work.images.length !== 0
+          ? prependAssetURI(image1.directus_files_id.id)
+          : "",
       type: ColumnType.Image,
     },
     {
-      src: prependAssetURI(image2.directus_files_id.id),
+      src:
+        work.drawings.length !== 0
+          ? prependAssetURI(drawing1.directus_files_id.id)
+          : "",
       type: ColumnType.Image,
     },
   ];
