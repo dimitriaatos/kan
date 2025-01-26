@@ -4,7 +4,7 @@
       <ConditionalLink
         :class="{ left: edge !== Edge.Start }"
         class="goto"
-        :to="`image-${index + Direction.Back}`"
+        :to="`${route.params.type}-${index + Direction.Back}`"
         :condition="edge !== Edge.Start"
       >
         <div class="goto" />
@@ -12,7 +12,7 @@
       <ConditionalLink
         :class="{ right: edge !== Edge.End }"
         class="goto"
-        :to="`image-${index + Direction.Forward}`"
+        :to="`${route.params.type}-${index + Direction.Forward}`"
         :condition="edge !== Edge.End"
       >
         <div class="goto" />
@@ -22,7 +22,8 @@
       <img
         :src="
           prependAssetURI(
-            work.images[Number(route.params.id)].directus_files_id.id
+            work[route.params.type][Number(route.params.id)].directus_files_id
+              .id
           )
         "
         alt=""
@@ -37,7 +38,7 @@
 
 <script lang="ts" setup>
 import { z } from "zod";
-import { getPageTitle, prependAssetURI, TITLE } from "~/assets/common";
+import { ColumnType, getPageTitle, prependAssetURI } from "~/assets/common";
 import {
   archiveBySlugQuery,
   archiveElementSchema,
@@ -48,6 +49,7 @@ const { $directus } = useNuxtApp();
 const route = useRoute() as ReturnType<typeof useRoute> & {
   params: {
     id: string;
+    type: ColumnType.Image | ColumnType.Drawing;
     slug: string;
   };
 };
@@ -80,7 +82,7 @@ enum Edge {
 const edge = computed((): Edge => {
   return index === 0
     ? Edge.Start
-    : index < work.value.images.length - 1
+    : index < work.value[route.params.type].length - 1
     ? Edge.Middle
     : Edge.End;
 });
@@ -93,7 +95,8 @@ useHead({
       hid: "og-image",
       property: "og:image",
       content: `${prependAssetURI(
-        work.value.images[Number(route.params.id)].directus_files_id.id
+        work.value[route.params.type][Number(route.params.id)].directus_files_id
+          .id
       )}`,
     },
   ],

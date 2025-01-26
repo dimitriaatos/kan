@@ -13,7 +13,7 @@
 import { getColumns } from "~/assets/archive";
 import { archiveQuery, archiveSchema } from "~/schema";
 import { z } from "zod";
-import { getPageTitle, TITLE } from "~/assets/common";
+import { getPageTitle } from "~/assets/common";
 import { storeToRefs } from "pinia";
 
 const arrangeBy = useArrangeByStore();

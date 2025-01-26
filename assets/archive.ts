@@ -26,7 +26,7 @@ export const getColumns = (
         work.drawings.length !== 0
           ? prependAssetURI(drawing1.directus_files_id.id)
           : "",
-      type: ColumnType.Image,
+      type: ColumnType.Drawing,
     },
   ];
   if (offset !== undefined)

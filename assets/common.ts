@@ -1,6 +1,7 @@
 export enum ColumnType {
   Description,
-  Image,
+  Image = "images",
+  Drawing = "drawings",
 }
 
 export const capitalizeFirstLetter = (string: string): string => {

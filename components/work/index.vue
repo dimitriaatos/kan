@@ -6,14 +6,13 @@
       :preview="preview"
     />
     <ConditionalLink
+      v-if="
+        column.type === ColumnType.Image || column.type === ColumnType.Drawing
+      "
       :condition="!preview"
-      :to="`/works/${work.slug}/image-${0}`"
+      :to="`/works/${work.slug}/${column.type}-${0}`"
     >
-      <WorkImage
-        v-if="column.type === ColumnType.Image"
-        :src="column.src"
-        :preview="preview"
-      />
+      <WorkImage :src="column.src" :preview="preview" />
     </ConditionalLink>
   </div>
 </template>
