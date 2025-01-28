@@ -1,12 +1,27 @@
 <template>
   <ArrangeBy v-if="isOpen" />
-  <NuxtLink
-    :to="`works/${archive[index].slug}`"
+  <button
     v-for="(columns, index) in parsedWorks"
-    class="work underlinePreview"
+    class="work"
+    :class="{
+      underlinePreview: !openWorks[index],
+      closed: !openWorks[index],
+      open: openWorks[index],
+    }"
+    @click="handleAccordion(index)"
   >
-    <Work :columns="columns" :preview="true" , :work="archive[index]" />
-  </NuxtLink>
+    <ConditionalLink
+      :condition="isMobile"
+      :to="`works/${archive[index].slug}`"
+      class="work underlinePreview"
+    >
+      <Work
+        :columns="columns"
+        :open="openWorks[index]"
+        :work="archive[index]"
+      />
+    </ConditionalLink>
+  </button>
 </template>
 
 <script lang="ts" setup>
@@ -15,6 +30,8 @@ import { archiveQuery, archiveSchema } from "~/schema";
 import { z } from "zod";
 import { getPageTitle } from "~/assets/common";
 import { storeToRefs } from "pinia";
+
+const isMobile = false;
 
 const arrangeBy = useArrangeByStore();
 const { isOpen } = storeToRefs(arrangeBy);
@@ -29,9 +46,15 @@ const archive = computed(() => {
   return z.object({ archive: archiveSchema }).parse(data.value).archive;
 });
 
-const parsedWorks = computed(() =>
-  archive.value.map((work, index) => getColumns(work, index))
-);
+const parsedWorks = computed(() => archive.value.map(getColumns));
+
+const openWorks = ref<boolean[]>(parsedWorks.value.map(() => false));
+
+const handleAccordion = (index: number) => {
+  if (!openWorks.value[index]) {
+    openWorks.value[index] = !openWorks.value[index];
+  }
+};
 
 useHead({
   title: getPageTitle("Archive"),
@@ -43,18 +66,21 @@ useHead({
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   border-bottom: 1px solid black;
   flex: 1 1 0px;
   gap: 1em;
-  height: 30rem;
-  overflow: hidden;
+}
+
+.closed {
+  height: 30em;
+}
+
+.open {
+  cursor: default;
 }
 
 @media (hover: hover) {
-  .underlinePreview:hover:deep(h2) {
-    text-decoration: underline;
-  }
   .underlinePreview:hover:deep(p) {
     text-decoration-line: underline;
     text-decoration-style: dashed;

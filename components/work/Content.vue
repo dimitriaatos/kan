@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div class="parent">
     <h2>{{ data.title }}</h2>
     <section
-      :class="preview ? 'previewSection' : 'section'"
+      :class="{ closedSection: !open }"
+      class="section"
       v-html="data.description"
     />
   </div>
-  <div v-if="!preview">
+  <div v-if="open" class="section">
     <ul>
       <li v-for="(value, key) in metadata" :key="key">
         {{ key }}: {{ value }}
@@ -48,7 +49,7 @@
 import type { ArchiveElementNoImage } from "~/schema";
 
 const props = defineProps<{
-  preview: boolean;
+  open: boolean;
   data: ArchiveElementNoImage;
 }>();
 
@@ -61,12 +62,17 @@ const metadata = Object.fromEntries(
 </script>
 
 <style scoped lang="scss">
+.parent {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 h2 {
   text-align: center;
   margin-bottom: var(--padding);
 }
-.previewSection {
-  text-align: left;
+
+.closedSection {
   display: -webkit-box;
   line-clamp: 4;
   -webkit-line-clamp: 4; /* Number of lines to display */
@@ -74,6 +80,11 @@ h2 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.closedSection:deep(p) {
+  margin-top: 0;
+}
+
 .section {
   text-align: left;
 }
