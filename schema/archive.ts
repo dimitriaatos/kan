@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { typologySchema, collaboratorSchema, fileSchema } from "./common";
+import { collaboratorSchema, fileSchema } from "./common";
 import { gql } from "~/assets/common";
+import { typologySchema } from "./typology";
 
 export const archiveElementNoImageSchema = z.object({
   title: z.string().nullable(),
@@ -27,9 +28,27 @@ export const archiveSchema = z.array(archiveElementSchema);
 
 export type Archive = z.infer<typeof archiveSchema>;
 
-export const archiveQuery = gql`
-  query Archive {
-    archive {
+export const getArchiveQuery = (shouldFilter: boolean) => gql`
+  query Archive (
+    $sort: [String],
+    ${shouldFilter ? gql`$typology: GraphQLStringOrFloat,` : ""}
+  ) {
+    archive(
+      sort: $sort,
+  ${
+    shouldFilter
+      ? gql`
+        filter: {
+          typology:{
+            typology_id: {
+              id: { _eq: $typology }
+            }
+          }
+        }
+      `
+      : ""
+  }
+      ) {
       title
       description
       slug
@@ -48,6 +67,7 @@ export const archiveQuery = gql`
       typology {
         typology_id {
           title
+          id
         }
       }
       team {
@@ -85,6 +105,7 @@ export const archiveBySlugQuery = gql`
       typology {
         typology_id {
           title
+          id
         }
       }
       team {

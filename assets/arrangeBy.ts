@@ -1,35 +1,71 @@
+import type { WorkColumns } from "~/@types/work";
+import type { Archive, Typology } from "~/schema";
+
+export type Works = Array<{
+  work: Archive[number];
+  columns: WorkColumns;
+  open: boolean;
+}>;
+
+export enum Order {
+  Inc = "",
+  Dec = "-",
+}
+
 export enum Type {
   Sorting,
   Filter,
 }
 
-export enum Size {
-  Inc = "Smallest",
-  Dec = "Largest",
+export enum Sort {
+  Date = "year",
+  Size = "size",
 }
 
-export enum Date {
-  Inc = "Newest",
-  Dec = "Oldest",
+enum Filter {
+  Typology = "typology",
 }
 
-export const menu = [
+export const Arrange = {
+  ...Filter,
+  ...Sort,
+};
+
+export type ArrangeType = Filter | Sort;
+
+export const sortingMenu = [
   {
     title: "Date",
-    property: "date",
-    type: Type.Sorting,
-    children: [Date.Inc, Date.Dec],
+    type: Sort.Date,
+    children: [
+      {
+        title: "Newest",
+        type: Order.Dec,
+      },
+      {
+        title: "Oldest",
+        type: Order.Inc,
+      },
+    ],
   },
   {
     title: "Size",
-    property: "size",
-    type: Type.Sorting,
-    children: [Size.Inc, Size.Dec],
+    type: Sort.Size,
+    children: [
+      {
+        title: "Smallest",
+        type: Order.Inc,
+      },
+      {
+        title: "Largest",
+        type: Order.Dec,
+      },
+    ],
   },
-  {
-    title: "Typology",
-    property: "categories",
-    type: Type.Filter,
-    children: ["COMMERCIAL", "RESIDENTIAL"],
-  },
-] as const;
+];
+
+export const filteringMenuElement = {
+  title: "Typology" as const,
+  type: Arrange.Typology,
+  children: [] as Typology[],
+};

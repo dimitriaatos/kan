@@ -1,37 +1,37 @@
 <template>
   <div class="container1 h2size">
     <ul
-      v-if="parent !== null"
+      v-if="focusedCategory !== null"
       class="child"
       :class="{
-        start: parent == menu.at(0)?.property,
-        end: parent == menu.at(-1)?.property,
+        start: focusedCategory?.type == menu.at(0)?.type,
+        end: focusedCategory?.type == menu.at(-1)?.type,
       }"
     >
       <li
-        v-for="menuChild in menu.find((item) => item.property === parent)
-          ?.children"
-        :key="menuChild"
+        v-for="(menuChild, index) in focusedCategory?.children"
+        :key="menuChild.title"
       >
         <button
           class="clickable h2size"
           :class="{
-            selected: child === menuChild,
+            selected: isChildSelected(focusedCategory, index),
           }"
-          @click="select(menuChild)"
+          @click="selectChild(focusedCategory, index)"
         >
-          {{ menuChild }}
+          {{ menuChild.title }}
         </button>
       </li>
     </ul>
     <ul class="parent">
-      <li v-for="item in menu" :key="item.property">
+      <li v-for="item in menu" :key="item.type">
         <button
           class="clickable h2size"
           :class="{
-            selected: parent === item.property,
+            selected: focusedCategory?.type === item.type,
           }"
-          @click="toggle(item.property)"
+          @mouseover="handleCategoryHover(item)"
+          @click="handleCategoryClick(item)"
         >
           {{ item.title }}
         </button>
@@ -41,17 +41,81 @@
 </template>
 
 <script lang="ts" setup>
-import { menu } from "~/assets/arrangeBy";
+import {
+  Arrange,
+  sortingMenu,
+  filteringMenuElement,
+  Sort,
+} from "~/assets/arrangeBy";
+import { defaultSorting } from "~/assets/common";
+import type { Typology } from "~/schema";
 
-const arrangeBy = useArrangeByStore();
-const { parent, child } = storeToRefs(arrangeBy);
-const toggle = (value: (typeof menu)[number]["property"] | null) => {
-  parent.value = parent.value === value ? null : value;
-  child.value = null;
+const props = defineProps<{ typology: Typology[] | null }>();
+
+const menu = computed(() => {
+  filteringMenuElement.children = props.typology || [];
+  return [...sortingMenu, filteringMenuElement];
+});
+
+const archiveStore = useArchiveStore();
+const { sortBy, filterBy } = storeToRefs(archiveStore);
+
+const focusedCategory = ref<(typeof menu.value)[number] | null>(null);
+
+/**Type-guard function*/
+const getIsTypology = (
+  item: (typeof menu.value)[number]
+): item is typeof filteringMenuElement => {
+  return item.type === Arrange.Typology;
 };
 
-const select = (value: (typeof menu)[number]["children"][number] | null) => {
-  child.value = value;
+const selectChild = (category: (typeof menu.value)[number], index: number) => {
+  if (getIsTypology(category)) {
+    console.log(filterBy.value, category.children[index].id);
+    if (filterBy.value === category.children[index].id) filterBy.value = null;
+    else filterBy.value = category.children[index].id;
+  } else {
+    if (
+      sortBy.value.type === category.type &&
+      category.children[index].type === sortBy.value.order
+    ) {
+      sortBy.value = defaultSorting;
+    } else {
+      sortBy.value = {
+        type: category.type,
+        order: category.children[index].type,
+      };
+    }
+  }
+};
+
+const isChildSelected = (
+  category: (typeof menu.value)[number],
+  index: number
+): boolean => {
+  switch (category.type) {
+    case Arrange.Typology:
+      return filterBy.value === category.children[index].id;
+    case sortBy.value.type:
+      return category.children[index].type === sortBy.value.order;
+    default:
+      return false;
+  }
+};
+
+const handleCategoryHover = (item: (typeof menu.value)[number]) => {
+  focusedCategory.value = item;
+};
+
+const handleCategoryClick = (item: (typeof menu.value)[number]) => {
+  handleCategoryHover(item);
+  if (getIsTypology(item)) {
+    if (filterBy.value !== null) filterBy.value = null;
+  } else {
+    if (sortBy.value.type !== defaultSorting.type) {
+      sortBy.value = defaultSorting;
+    }
+  }
 };
 </script>
 

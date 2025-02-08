@@ -11,6 +11,7 @@
       v-if="column.type === ColumnType.Description"
       :data="column.data"
       :open="open"
+      @close="emit('close')"
     />
     <ConditionalLink
       v-if="
@@ -33,6 +34,10 @@ defineProps<{
   open: boolean;
   columns: WorkColumns;
   work: Archive[number];
+}>();
+
+const emit = defineEmits<{
+  (e: "close"): void;
 }>();
 </script>
 

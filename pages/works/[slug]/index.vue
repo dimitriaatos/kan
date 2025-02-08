@@ -1,6 +1,6 @@
 <template>
   <div class="work">
-    <Work :columns="columns" :work="work" :preview="false" />
+    <Work :columns="columns" :work="work" :open="true" />
   </div>
 </template>
 
@@ -32,7 +32,7 @@ const work = computed(() => {
 });
 
 const columns = computed(() => {
-  return getColumns(work.value);
+  return getColumns({ work: work.value });
 });
 
 useHead({

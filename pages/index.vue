@@ -1,60 +1,56 @@
 <template>
-  <ArrangeBy v-if="isOpen" />
-  <button
-    v-for="(columns, index) in parsedWorks"
+  <ArrangeBy v-if="isOpen" :typology="typology" />
+  <component
+    v-for="(work, index) in parsedWorks"
+    :is="work.open ? 'div' : 'button'"
     class="work"
     :class="{
-      underlinePreview: !openWorks[index],
-      closed: !openWorks[index],
-      open: openWorks[index],
+      underlinePreview: !work.open,
+      closed: !work.open,
+      open: work.open,
     }"
-    @click="handleAccordion(index)"
+    @click="!work.open && toggleAccordion(index, true)"
   >
     <ConditionalLink
       :condition="isMobile"
-      :to="`works/${archive[index].slug}`"
+      :to="`works/${work.work.slug}`"
       class="work underlinePreview"
     >
       <Work
-        :columns="columns"
-        :open="openWorks[index]"
-        :work="archive[index]"
+        :columns="work.columns"
+        :open="work.open"
+        :work="work.work"
+        @close="toggleAccordion(index, false)"
       />
     </ConditionalLink>
-  </button>
+  </component>
 </template>
 
 <script lang="ts" setup>
-import { getColumns } from "~/assets/archive";
-import { archiveQuery, archiveSchema } from "~/schema";
+import { typologyQuery, typologySchema } from "~/schema";
 import { z } from "zod";
 import { getPageTitle } from "~/assets/common";
 import { storeToRefs } from "pinia";
 
 const isMobile = false;
 
-const arrangeBy = useArrangeByStore();
-const { isOpen } = storeToRefs(arrangeBy);
+const archiveStore = useArchiveStore();
+const { initArchive, toggleAccordion } = archiveStore;
+const { isOpen, filterBy, sortBy, parsedWorks } = storeToRefs(archiveStore);
 
 const { $directus } = useNuxtApp();
 
-const { data } = await useAsyncData("archive", () => {
-  return $directus.query(archiveQuery);
+await useAsyncData("archive", () => initArchive($directus), {
+  watch: [filterBy, sortBy],
 });
 
-const archive = computed(() => {
-  return z.object({ archive: archiveSchema }).parse(data.value).archive;
+const { data: typology } = await useAsyncData("typology", async () => {
+  const res = await $directus.query(typologyQuery);
+  const parsed = z
+    .object({ typology: z.array(typologySchema) })
+    .parse(res).typology;
+  return parsed;
 });
-
-const parsedWorks = computed(() => archive.value.map(getColumns));
-
-const openWorks = ref<boolean[]>(parsedWorks.value.map(() => false));
-
-const handleAccordion = (index: number) => {
-  if (!openWorks.value[index]) {
-    openWorks.value[index] = !openWorks.value[index];
-  }
-};
 
 useHead({
   title: getPageTitle("Archive"),

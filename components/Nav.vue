@@ -11,7 +11,7 @@
       <span class="element">
         <button
           v-if="isHome"
-          @click="toggle"
+          @click="toggleArrangeBy"
           class="h2size clickable"
           :class="{ selected: isOpen }"
         >
@@ -25,9 +25,9 @@
 <script lang="ts" setup>
 const route = useRoute();
 const isHome = computed(() => route.path === "/");
-const arrangeBy = useArrangeByStore();
-const { toggle } = arrangeBy;
-const { isOpen } = storeToRefs(arrangeBy);
+const archiveStore = useArchiveStore();
+const { toggleArrangeBy } = archiveStore;
+const { isOpen } = storeToRefs(archiveStore);
 </script>
 
 <style scoped>
