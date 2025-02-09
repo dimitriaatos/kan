@@ -71,7 +71,6 @@ const getIsTypology = (
 
 const selectChild = (category: (typeof menu.value)[number], index: number) => {
   if (getIsTypology(category)) {
-    console.log(filterBy.value, category.children[index].id);
     if (filterBy.value === category.children[index].id) filterBy.value = null;
     else filterBy.value = category.children[index].id;
   } else {

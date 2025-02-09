@@ -40,7 +40,6 @@ export const getColumns = ({
     for (let times = 0; times < offset % columnData.length; times++) {
       columnData.unshift(columnData.pop() as (typeof columnData)[number]);
     }
-  console.log(columnData);
   return columnData;
 };
 
