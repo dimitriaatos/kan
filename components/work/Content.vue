@@ -84,6 +84,10 @@ h2 {
   margin-bottom: var(--padding);
 }
 
+button {
+  width: 100%;
+}
+
 .closedSection {
   display: -webkit-box;
   line-clamp: 4;
@@ -91,10 +95,6 @@ h2 {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.closedSection:deep(p) {
-  margin-top: 0;
 }
 
 .section {
