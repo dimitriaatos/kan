@@ -40,7 +40,7 @@ export const getColumns = ({
     for (let times = 0; times < offset % columnData.length; times++) {
       columnData.unshift(columnData.pop() as (typeof columnData)[number]);
     }
-
+  console.log(columnData);
   return columnData;
 };
 
@@ -48,11 +48,11 @@ export const getFormattedWorks = (
   works: Archive,
   config?: RuntimeConfig
 ): Works => {
-  return works.map((work) => {
+  return works.map((work, index) => {
     return {
       work,
       open: false,
-      columns: getColumns({ work, config }),
+      columns: getColumns({ work, config, offset: index }),
     };
   });
 };
