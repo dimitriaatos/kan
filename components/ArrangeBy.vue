@@ -60,7 +60,7 @@ const menu = computed(() => {
 const archiveStore = useArchiveStore();
 const { sortBy, filterBy } = storeToRefs(archiveStore);
 
-const focusedCategory = ref<(typeof menu.value)[number] | null>(null);
+const focusedCategory = ref<(typeof menu.value)[number]>(menu.value[0]);
 
 /**Type-guard function*/
 const getIsTypology = (
@@ -102,19 +102,25 @@ const isChildSelected = (
   }
 };
 
-const handleCategoryHover = (item: (typeof menu.value)[number]) => {
+const focusOnCategory = (item: (typeof menu.value)[number]) => {
   focusedCategory.value = item;
 };
 
+const handleCategoryHover = (item: (typeof menu.value)[number]) => {
+  const { matches: isMobile } = window.matchMedia("(hover: hover)");
+  if (isMobile) focusOnCategory(item);
+};
+
 const handleCategoryClick = (item: (typeof menu.value)[number]) => {
-  handleCategoryHover(item);
   if (getIsTypology(item)) {
-    if (filterBy.value !== null) filterBy.value = null;
+    if (filterBy.value !== null && focusedCategory.value?.type === item.type)
+      filterBy.value = null;
   } else {
     if (sortBy.value.type !== defaultSorting.type) {
       sortBy.value = defaultSorting;
     }
   }
+  focusOnCategory(item);
 };
 </script>
 
@@ -149,5 +155,28 @@ const handleCategoryClick = (item: (typeof menu.value)[number]) => {
 
 .child.start {
   justify-content: flex-start;
+}
+
+@media (max-width: 850px) {
+  .container1 {
+    flex-direction: column-reverse;
+  }
+
+  .parent {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .child {
+    align-items: center;
+  }
+
+  .child.end {
+    align-items: flex-end;
+  }
+
+  .child.start {
+    align-items: flex-start;
+  }
 }
 </style>
