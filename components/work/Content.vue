@@ -97,6 +97,15 @@ button {
   text-overflow: ellipsis;
 }
 
+@media (max-width: 850px) {
+  .closedSection {
+    display: none;
+  }
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
 .section {
   text-align: left;
 }

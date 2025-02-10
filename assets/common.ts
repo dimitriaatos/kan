@@ -34,3 +34,5 @@ export const defaultSorting = {
   type: Sort.Date,
   order: Order.Dec,
 };
+
+export const mobileBreakpoint = 800;

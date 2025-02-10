@@ -2,6 +2,7 @@
   --padding: 2em;
   --half-padding: calc(var(--padding) / 2);
   --accent: #329302;
+	--mobile-breakpoint: 800px
 }
 
 html {

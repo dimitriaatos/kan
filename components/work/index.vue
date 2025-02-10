@@ -5,6 +5,7 @@
     :class="{
       description: column.type === ColumnType.Description,
       image: column.type !== ColumnType.Description,
+      closedImage: column.type !== ColumnType.Description && !open,
     }"
   >
     <WorkContent
@@ -63,5 +64,14 @@ const emit = defineEmits<{
 
 .image {
   height: 30em;
+}
+
+@media (max-width: 850px) {
+  .closedImage {
+    display: none;
+  }
+  .column {
+    padding: 2em 0;
+  }
 }
 </style>

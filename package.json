@@ -19,6 +19,7 @@
     "pinia": "^2.3.0",
     "vue": "latest",
     "vue-router": "latest",
+    "vue-window-size": "^2.0.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {

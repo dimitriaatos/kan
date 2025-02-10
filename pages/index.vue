@@ -2,19 +2,20 @@
   <ArrangeBy v-if="isOpen" :typology="typology" />
   <component
     v-for="(work, index) in parsedWorks"
-    :is="work.open ? 'div' : 'button'"
+    :is="work.open || isMobile ? 'div' : 'button'"
     class="work"
     :class="{
       underlinePreview: !work.open,
       closed: !work.open,
       open: work.open,
     }"
-    @click="!work.open && toggleAccordion(index, true)"
+    @click="!work.open && !isMobile && toggleAccordion(index, true)"
   >
     <ConditionalLink
       :condition="isMobile"
       :to="`works/${work.work.slug}`"
-      class="work underlinePreview"
+      class="underlinePreview"
+      style="width: 100%"
     >
       <Work
         :columns="work.columns"
@@ -31,8 +32,10 @@ import { typologyQuery, typologySchema } from "~/schema";
 import { z } from "zod";
 import { getPageTitle } from "~/assets/common";
 import { storeToRefs } from "pinia";
+import { useWindowSize } from "vue-window-size";
 
-const isMobile = false;
+const { width } = useWindowSize();
+const isMobile = computed(() => width.value < 850);
 
 const archiveStore = useArchiveStore();
 const { initArchive, toggleAccordion } = archiveStore;
@@ -66,10 +69,17 @@ useHead({
   border-bottom: 1px solid black;
   flex: 1 1 0px;
   gap: 1em;
+  width: 100%;
 }
 
 .closed {
   height: 30em;
+}
+
+@media (max-width: 850px) {
+  .closed {
+    height: initial;
+  }
 }
 
 .open {

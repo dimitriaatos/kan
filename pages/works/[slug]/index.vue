@@ -58,4 +58,10 @@ useHead({
   gap: 1em;
   position: relative;
 }
+
+@media (max-width: 850px) {
+  .work {
+    display: block;
+  }
+}
 </style>
