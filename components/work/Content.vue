@@ -38,9 +38,12 @@
           v-for="(category, index) in data.typology"
           :key="category.typology_id.title"
         >
-          <NuxtLink class="tag clickable" :to="`/`">{{
-            category.typology_id.title
-          }}</NuxtLink>
+          <NuxtLink
+            class="tag clickable"
+            :to="`/`"
+            @click="handleTagSelection(category.typology_id.id)"
+            >{{ category.typology_id.title }}</NuxtLink
+          >
           <span v-if="index + 1 !== data.typology.length">, </span>
         </span>
       </li>
@@ -60,6 +63,13 @@ const props = defineProps<{
   open: boolean;
   data: ArchiveElementNoImage;
 }>();
+
+const archiveStore = useArchiveStore();
+const { filterBy } = storeToRefs(archiveStore);
+
+const handleTagSelection = (tag: ArchiveElementNoImage["title"]): void => {
+  filterBy.value = tag;
+};
 
 const metadata = Object.fromEntries(
   [
