@@ -1,5 +1,4 @@
 <template>
-  <ArrangeBy v-if="isOpen" :typology="typology" />
   <component
     v-for="(work, index) in parsedWorks"
     :is="work.open || isMobile ? 'div' : 'button'"
@@ -28,8 +27,6 @@
 </template>
 
 <script lang="ts" setup>
-import { typologyQuery, typologySchema } from "~/schema";
-import { z } from "zod";
 import { getPageTitle } from "~/assets/common";
 import { storeToRefs } from "pinia";
 import { useWindowSize } from "vue-window-size";
@@ -41,20 +38,12 @@ const isMobile = computed(() =>
 
 const archiveStore = useArchiveStore();
 const { initArchive, toggleAccordion } = archiveStore;
-const { isOpen, filterBy, sortBy, parsedWorks } = storeToRefs(archiveStore);
+const { filterBy, sortBy, parsedWorks } = storeToRefs(archiveStore);
 
 const { $directus } = useNuxtApp();
 
 await useAsyncData("archive", () => initArchive($directus), {
   watch: [filterBy, sortBy],
-});
-
-const { data: typology } = await useAsyncData("typology", async () => {
-  const res = await $directus.query(typologyQuery);
-  const parsed = z
-    .object({ typology: z.array(typologySchema) })
-    .parse(res).typology;
-  return parsed;
 });
 
 useHead({

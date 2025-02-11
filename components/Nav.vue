@@ -11,7 +11,8 @@
       <span class="element">
         <button
           v-if="isHome"
-          @click="toggleArrangeBy"
+          @click="toggleArrangeBy()"
+          @mouseover="toggleArrangeBy(true)"
           class="h2size clickable"
           :class="{ selected: isOpen }"
         >

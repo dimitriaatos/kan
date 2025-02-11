@@ -12,8 +12,8 @@ export const useArchiveStore = defineStore("archiveStore", () => {
   const filterBy = ref<string | null>(null);
   const parsedWorks = ref<Works>([]);
 
-  const toggleArrangeBy = () => {
-    isOpen.value = !isOpen.value;
+  const toggleArrangeBy = (state?: boolean) => {
+    isOpen.value = state ?? !isOpen.value;
   };
 
   const initArchive = async (
