@@ -18,7 +18,8 @@
         <div class="goto" />
       </ConditionalLink>
       <NuxtLink
-        :to="`/works/${route.params.slug}`"
+        :to="isMobile ? `/works/${route.params.slug}` : '/'"
+        @click="handleClose"
         id="close"
         class="clickable"
       >
@@ -36,7 +37,10 @@
         alt=""
       />
 
-      <NuxtLink :to="`/works/${route.params.slug}`">
+      <NuxtLink
+        :to="isMobile ? `/works/${route.params.slug}` : '/'"
+        @click="handleClose"
+      >
         <h2>{{ work.title }}</h2>
       </NuxtLink>
     </div>
@@ -44,6 +48,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useWindowSize } from "vue-window-size";
 import { z } from "zod";
 import { ColumnType, getPageTitle, prependAssetURI } from "~/assets/common";
 import {
@@ -51,6 +56,11 @@ import {
   archiveElementSchema,
   type Archive,
 } from "~/schema";
+
+const { width } = useWindowSize();
+const isMobile = computed(() =>
+  width.value !== 0 ? width.value < 850 : false
+);
 
 const { $directus } = useNuxtApp();
 const route = useRoute() as ReturnType<typeof useRoute> & {
@@ -74,6 +84,17 @@ const work = computed(() => {
   return z.object({ archive_by_id: archiveElementSchema }).parse(data.value)
     .archive_by_id;
 });
+
+const archiveStore = useArchiveStore();
+const { toggleAccordion } = archiveStore;
+const { parsedWorks } = storeToRefs(archiveStore);
+
+const handleClose = () => {
+  const index = parsedWorks.value.findIndex((work) => {
+    work.work.slug === route.params.slug;
+  });
+  toggleAccordion(index, true);
+};
 
 enum Direction {
   Back = -1,
