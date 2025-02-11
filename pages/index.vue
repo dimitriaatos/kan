@@ -35,7 +35,9 @@ import { storeToRefs } from "pinia";
 import { useWindowSize } from "vue-window-size";
 
 const { width } = useWindowSize();
-const isMobile = computed(() => width.value < 850);
+const isMobile = computed(() =>
+  width.value !== 0 ? width.value < 850 : false
+);
 
 const archiveStore = useArchiveStore();
 const { initArchive, toggleAccordion } = archiveStore;
