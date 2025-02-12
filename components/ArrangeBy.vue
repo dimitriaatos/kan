@@ -1,5 +1,5 @@
 <template>
-  <div class="container1 h2size" @mouseleave="toggleArrangeBy(false)">
+  <div class="container1 h2size">
     <ul
       v-if="focusedCategory !== null"
       class="child"
@@ -58,7 +58,6 @@ const menu = computed(() => {
 });
 
 const archiveStore = useArchiveStore();
-const { toggleArrangeBy } = archiveStore;
 const { sortBy, filterBy, isOpen } = storeToRefs(archiveStore);
 
 const focusedCategory = ref<(typeof menu.value)[number]>(menu.value[0]);

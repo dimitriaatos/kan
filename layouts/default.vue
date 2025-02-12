@@ -1,5 +1,5 @@
 <template>
-  <div id="nav">
+  <div id="nav" @mouseleave="handleMouseLeave">
     <Nav />
     <ArrangeBy v-if="isOpen" :typology="typology" />
   </div>
@@ -15,6 +15,7 @@ const { $directus } = useNuxtApp();
 
 const archiveStore = useArchiveStore();
 const { isOpen } = storeToRefs(archiveStore);
+const { toggleArrangeBy } = archiveStore;
 
 const { data: typology } = await useAsyncData("typology", async () => {
   const res = await $directus.query(typologyQuery);
@@ -23,14 +24,20 @@ const { data: typology } = await useAsyncData("typology", async () => {
     .parse(res).typology;
   return parsed;
 });
+
+const handleMouseLeave = () => {
+  // using mouse leave also on touch screens for catching tap outside the menu area
+  toggleArrangeBy(false);
+};
 </script>
 
 <style scoped>
 #nav {
   position: fixed;
   top: 0;
-  left: var(--padding);
-  right: var(--padding);
+  left: 0;
+  right: 0;
+  padding: 0 var(--padding);
   background-color: white;
   z-index: 10;
 }

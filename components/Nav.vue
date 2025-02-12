@@ -12,7 +12,7 @@
         <button
           v-if="isHome"
           @click="toggleArrangeBy()"
-          @mouseover="toggleArrangeBy(true)"
+          @mouseover="handleMouseOver"
           class="h2size clickable"
           :class="{ selected: isOpen }"
         >
@@ -29,6 +29,13 @@ const isHome = computed(() => route.path === "/");
 const archiveStore = useArchiveStore();
 const { toggleArrangeBy } = archiveStore;
 const { isOpen } = storeToRefs(archiveStore);
+
+const handleMouseOver = () => {
+  const { matches: isMobile } = window.matchMedia("(hover: hover)");
+  if (isMobile) {
+    toggleArrangeBy(true);
+  }
+};
 </script>
 
 <style scoped>
