@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import { z } from "zod";
-import type { WorkColumns } from "~/@types/work";
 import { getFormattedWorks } from "~/assets/archive";
-import { Order, Sort, type Works } from "~/assets/arrangeBy";
+import type { Order, Sort, Works } from "~/assets/arrangeBy";
 import { defaultSorting } from "~/assets/common";
 import { archiveSchema, getArchiveQuery, type Archive } from "~/schema";
 
@@ -38,6 +37,7 @@ export const useArchiveStore = defineStore("archiveStore", () => {
   };
 
   const toggleAccordion = (index: number, state?: boolean) => {
+    console.log({ index, state });
     parsedWorks.value[index].open = state ?? !parsedWorks.value[index].open;
   };
 

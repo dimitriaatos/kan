@@ -43,7 +43,6 @@ nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  border-bottom: solid black 1px;
   padding: var(--padding) 0;
 }
 

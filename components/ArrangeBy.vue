@@ -139,7 +139,7 @@ const handleCategoryClick = (item: (typeof menu.value)[number]) => {
 .parent {
   display: flex;
   flex-direction: column;
-  gap: var(--half-padding);
+  gap: var(--padding);
   text-align: right;
 }
 

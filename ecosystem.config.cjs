@@ -4,7 +4,7 @@ const env_production = dotenv.config({ path: '.env.production' }).parsed;
 module.exports = {
 	apps: [{
 		name: 'kan',
-		script: `pnpx serve .output/public`,
+		script: 'pnpx serve .output/public',
 		env_production,
 	}],
 

@@ -2,7 +2,8 @@
   --padding: 2em;
   --half-padding: calc(var(--padding) / 2);
   --accent: #329302;
-	--mobile-breakpoint: 800px
+	--mobile-breakpoint: 800px;
+	--work-vertical-padding: 3.5em;
 }
 
 html {
@@ -40,7 +41,7 @@ h1 {
 
 .h2size,
 h2 {
-  font-size: 24px;
+  font-size: 16px;
 }
 
 h1,

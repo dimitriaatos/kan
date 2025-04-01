@@ -1,28 +1,34 @@
 <template>
-  <div
-    v-for="column in columns"
-    class="column"
-    :class="{
-      description: column.type === ColumnType.Description,
-      image: column.type !== ColumnType.Description,
-      closedImage: column.type !== ColumnType.Description && !open,
-    }"
-  >
-    <WorkContent
-      v-if="column.type === ColumnType.Description"
-      :data="column.data"
-      :open="open"
-      @close="emit('close')"
-    />
-    <ConditionalLink
-      v-if="
-        column.type === ColumnType.Image || column.type === ColumnType.Drawing
-      "
-      :condition="open"
-      :to="`/works/${work.slug}/${column.type}-${0}`"
+  <button v-if="open" @click="handleTitleClick" class="title">
+    <h2>{{ work.title }}</h2>
+  </button>
+  <h2 class="title" v-else>{{ work.title }}</h2>
+  <div class="work">
+    <div
+      v-for="column in columns"
+      class="column"
+      :class="{
+        description: column.type === ColumnType.Description,
+        image: column.type !== ColumnType.Description,
+        closedImage: column.type !== ColumnType.Description && !open,
+      }"
     >
-      <WorkImage :src="column.src" :open="open" />
-    </ConditionalLink>
+      <WorkContent
+        v-if="column.type === ColumnType.Description"
+        :data="column.data"
+        :open="open"
+        @close="emit('close')"
+      />
+      <ConditionalLink
+        v-if="
+          column.type === ColumnType.Image || column.type === ColumnType.Drawing
+        "
+        :condition="open"
+        :to="`/works/${work.slug}/${column.type}-${0}`"
+      >
+        <WorkImage :src="column.src" :open="open" />
+      </ConditionalLink>
+    </div>
   </div>
 </template>
 
@@ -37,15 +43,18 @@ defineProps<{
   work: Archive[number];
 }>();
 
-const emit = defineEmits<{
-  (e: "close"): void;
-}>();
+const handleTitleClick = (event: MouseEvent): void => {
+  event.stopPropagation();
+  emit("close");
+};
+
+const emit = defineEmits<(e: "close") => void>();
 </script>
 
 <style scoped>
 .column {
   flex: 1 1 0px;
-  padding: 3.5em 0;
+  padding: var(--work-vertical-padding) 0;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -66,12 +75,31 @@ const emit = defineEmits<{
   height: 30em;
 }
 
+.work {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 1 0px;
+  gap: 1em;
+  width: 100%;
+}
+
+.title {
+  text-align: left;
+  width: 100%;
+  border-bottom: solid black 1px;
+}
+
 @media (max-width: 850px) {
   .closedImage {
     display: none;
   }
   .column {
     padding: 2em 0;
+  }
+  .work {
+    display: block;
   }
 }
 </style>

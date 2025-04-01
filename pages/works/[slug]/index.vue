@@ -1,5 +1,5 @@
 <template>
-  <div class="work">
+  <div>
     <Work :columns="columns" :work="work" :open="true" />
   </div>
 </template>
@@ -47,21 +47,4 @@ useHead({
 });
 </script>
 
-<style scoped>
-.work {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  border-bottom: 1px solid black;
-  flex: 1 1 0px;
-  gap: 1em;
-  position: relative;
-}
-
-@media (max-width: 850px) {
-  .work {
-    display: block;
-  }
-}
-</style>
+<style scoped></style>

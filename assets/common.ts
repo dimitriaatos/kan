@@ -2,7 +2,7 @@ import type { RuntimeConfig } from "nuxt/schema";
 import { Order, Sort } from "./arrangeBy";
 
 export enum ColumnType {
-  Description,
+  Description = 0,
   Image = "images",
   Drawing = "drawings",
 }

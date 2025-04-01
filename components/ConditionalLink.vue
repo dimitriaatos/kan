@@ -1,12 +1,27 @@
 <template>
-  <NuxtLink v-if="condition" :to="to" :target="target" class="link">
+  <NuxtLink
+    v-if="condition"
+    :to="to"
+    :target="target"
+    class="link"
+    :class="className"
+    :style="style"
+  >
     <slot />
   </NuxtLink>
-  <slot v-else />
+  <slot v-else :class="className" :style="style" />
 </template>
 
 <script lang="ts" setup>
-defineProps<{ condition: boolean; to: string; target?: string }>();
+const props = defineProps<{
+  condition: boolean;
+  to: string;
+  target?: string;
+  class?: unknown;
+  style?: unknown;
+}>();
+
+const { class: className } = props;
 </script>
 
 <style scoped>

@@ -17,14 +17,11 @@
       >
         <div class="goto" />
       </ConditionalLink>
-      <NuxtLink
+      <Close
         :to="isMobile ? `/works/${route.params.slug}` : '/'"
         @click="handleClose"
-        id="close"
-        class="clickable"
-      >
-        <div />
-      </NuxtLink>
+        class="close"
+      />
     </div>
     <div id="gallery">
       <img
@@ -50,7 +47,11 @@
 <script lang="ts" setup>
 import { useWindowSize } from "vue-window-size";
 import { z } from "zod";
-import { ColumnType, getPageTitle, prependAssetURI } from "~/assets/common";
+import {
+  type ColumnType,
+  getPageTitle,
+  prependAssetURI,
+} from "~/assets/common";
 import {
   archiveBySlugQuery,
   archiveElementSchema,
@@ -102,12 +103,12 @@ enum Direction {
 }
 
 enum Edge {
-  Start,
-  End,
+  Start = 0,
+  End = 1,
 }
 
 const edges = computed((): Edge[] => {
-  let value: Edge[] = new Array();
+  const value: Edge[] = new Array();
   if (index === 0) value.push(Edge.Start);
   if (index >= work.value[route.params.type].length - 1) value.push(Edge.End);
   return value;
@@ -134,6 +135,12 @@ useHead({
   position: relative;
 }
 
+.close {
+  position: absolute;
+  right: 2vw;
+  top: 1em;
+}
+
 .goto {
   width: 100%;
   height: 100%;
@@ -147,24 +154,6 @@ useHead({
 .right {
   /* background-color: rgba(9, 255, 0, 0.5); */
   cursor: url("/icons/right.png") 15 25, e-resize;
-}
-
-#close {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  aspect-ratio: 1/1;
-  width: 2em;
-  position: absolute;
-  right: 2vw;
-  top: 1em;
-}
-
-#close > div {
-  background-color: rgb(255 0 0);
-  border-radius: 50%;
-  width: 1em;
-  height: 1em;
 }
 
 #overlay {

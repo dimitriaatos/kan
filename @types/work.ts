@@ -1,4 +1,4 @@
-import { ColumnType } from "~/assets/common";
+import type { ColumnType } from "~/assets/common";
 import type { ArchiveElementNoImage } from "~/schema/archive";
 
 type WorkColumn =

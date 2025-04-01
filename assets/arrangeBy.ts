@@ -13,8 +13,8 @@ export enum Order {
 }
 
 export enum Type {
-  Sorting,
-  Filter,
+  Sorting = 0,
+  Filter = 1,
 }
 
 export enum Sort {

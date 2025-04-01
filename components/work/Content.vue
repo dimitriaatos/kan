@@ -1,9 +1,5 @@
 <template>
   <div class="parent">
-    <button v-if="open" @click="handleTitleClick">
-      <h2>{{ data.title }}</h2>
-    </button>
-    <h2 v-else>{{ data.title }}</h2>
     <section
       :class="{ closedSection: !open }"
       class="section"
@@ -54,11 +50,6 @@
 <script lang="ts" setup>
 import type { ArchiveElementNoImage } from "~/schema";
 
-const handleTitleClick = (event: MouseEvent): void => {
-  event.stopPropagation();
-  emit("close");
-};
-
 const props = defineProps<{
   open: boolean;
   data: ArchiveElementNoImage;
@@ -78,9 +69,7 @@ const metadata = Object.fromEntries(
   ].filter(([key, value]) => value !== null)
 );
 
-const emit = defineEmits<{
-  (e: "close"): void;
-}>();
+const emit = defineEmits<(e: "close") => void>();
 </script>
 
 <style scoped lang="scss">

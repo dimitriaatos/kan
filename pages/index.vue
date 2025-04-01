@@ -2,14 +2,19 @@
   <component
     v-for="(work, index) in parsedWorks"
     :is="work.open || isMobile ? 'div' : 'button'"
-    class="work"
     :class="{
       underlinePreview: !work.open,
       closed: !work.open,
       open: work.open,
     }"
+    style="position: relative"
     @click="!work.open && !isMobile && toggleAccordion(index, true)"
   >
+    <Close
+      v-if="work.open"
+      class="close"
+      @click="(e: MouseEvent) => { handleCloseButton(e, index) }"
+    />
     <ConditionalLink
       :condition="isMobile"
       :to="`works/${work.work.slug}`"
@@ -30,6 +35,11 @@
 import { getPageTitle } from "~/assets/common";
 import { storeToRefs } from "pinia";
 import { useWindowSize } from "vue-window-size";
+
+const handleCloseButton = (e: MouseEvent, index: number) => {
+  e.stopPropagation();
+  toggleAccordion(index, false);
+};
 
 const { width } = useWindowSize();
 const isMobile = computed(() =>
@@ -52,15 +62,10 @@ useHead({
 </script>
 
 <style scoped>
-.work {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid black;
-  flex: 1 1 0px;
-  gap: 1em;
-  width: 100%;
+.close {
+  position: absolute;
+  right: 2vw;
+  top: calc(1em + var(--work-vertical-padding) / 2);
 }
 
 .closed {

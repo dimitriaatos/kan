@@ -19,7 +19,7 @@ export const getColumns = ({
     ...data
   } = work;
 
-  let columnData: WorkColumns = [
+  const columnData: WorkColumns = [
     { data, type: ColumnType.Description },
     {
       src:
