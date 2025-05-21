@@ -17,11 +17,7 @@
       >
         <div class="goto" />
       </ConditionalLink>
-      <Close
-        :to="isMobile ? `/works/${route.params.slug}` : '/'"
-        @click="handleClose"
-        class="close"
-      />
+      <Close @click="handleClose" class="close" />
     </div>
     <div id="gallery">
       <img
@@ -34,10 +30,7 @@
         alt=""
       />
 
-      <NuxtLink
-        :to="isMobile ? `/works/${route.params.slug}` : '/'"
-        @click="handleClose"
-      >
+      <NuxtLink @click="handleClose">
         <h2>{{ work.title }}</h2>
       </NuxtLink>
     </div>
@@ -90,11 +83,15 @@ const archiveStore = useArchiveStore();
 const { toggleAccordion } = archiveStore;
 const { parsedWorks } = storeToRefs(archiveStore);
 
+const router = useRouter();
+
 const handleClose = () => {
-  const index = parsedWorks.value.findIndex((work) => {
-    work.work.slug === route.params.slug;
-  });
-  toggleAccordion(index, true);
+  // const index = parsedWorks.value.findIndex((work) => {
+  //   work.work.slug === route.params.slug;
+  // });
+  // toggleAccordion(index, true);
+  console.log("go");
+  router.push({ path: isMobile ? `/works/${route.params.slug}` : "/" });
 };
 
 enum Direction {

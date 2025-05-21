@@ -35,29 +35,29 @@ export type ArrangeType = Filter | Sort;
 
 export const sortingMenu = [
   {
-    title: "Date",
+    title: "DATE",
     type: Sort.Date,
     children: [
       {
-        title: "Newest",
+        title: "newest",
         type: Order.Dec,
       },
       {
-        title: "Oldest",
+        title: "oldest",
         type: Order.Inc,
       },
     ],
   },
   {
-    title: "Size",
+    title: "SIZE",
     type: Sort.Size,
     children: [
       {
-        title: "Smallest",
+        title: "smallest",
         type: Order.Inc,
       },
       {
-        title: "Largest",
+        title: "largest",
         type: Order.Dec,
       },
     ],
@@ -65,7 +65,7 @@ export const sortingMenu = [
 ];
 
 export const filteringMenuElement = {
-  title: "Typology" as const,
+  title: "TYPOLOGY" as const,
   type: Arrange.Typology,
   children: [] as Typology[],
 };

@@ -1,5 +1,15 @@
 <template>
   <div class="container1 h2size">
+    <ul class="parent">
+      <li
+        v-for="item in focusedCategory ? [focusedCategory] : menu"
+        :key="item.type"
+      >
+        <button class="clickable h2size" @click="handleCategoryClick(item)">
+          {{ item.title }}
+        </button>
+      </li>
+    </ul>
     <ul
       v-if="focusedCategory !== null"
       class="child"
@@ -20,20 +30,6 @@
           @click="selectChild(focusedCategory, index)"
         >
           {{ menuChild.title }}
-        </button>
-      </li>
-    </ul>
-    <ul class="parent">
-      <li v-for="item in menu" :key="item.type">
-        <button
-          class="clickable h2size"
-          :class="{
-            selected: focusedCategory?.type === item.type,
-          }"
-          @mouseover="handleCategoryHover(item)"
-          @click="handleCategoryClick(item)"
-        >
-          {{ item.title }}
         </button>
       </li>
     </ul>
@@ -60,7 +56,7 @@ const menu = computed(() => {
 const archiveStore = useArchiveStore();
 const { sortBy, filterBy, isOpen } = storeToRefs(archiveStore);
 
-const focusedCategory = ref<(typeof menu.value)[number]>(menu.value[0]);
+const focusedCategory = ref<(typeof menu.value)[number] | null>(null);
 
 /**Type-guard function*/
 const getIsTypology = (
@@ -103,7 +99,7 @@ const isChildSelected = (
   }
 };
 
-const focusOnCategory = (item: (typeof menu.value)[number]) => {
+const focusOnCategory = (item: (typeof menu.value)[number] | null) => {
   focusedCategory.value = item;
 };
 
@@ -113,6 +109,10 @@ const handleCategoryHover = (item: (typeof menu.value)[number]) => {
 };
 
 const handleCategoryClick = (item: (typeof menu.value)[number]) => {
+  if (item.type === focusedCategory.value?.type) {
+    focusOnCategory(null);
+    return;
+  }
   if (getIsTypology(item)) {
     if (filterBy.value !== null && focusedCategory.value?.type === item.type)
       filterBy.value = null;
@@ -128,9 +128,9 @@ const handleCategoryClick = (item: (typeof menu.value)[number]) => {
 <style lang="scss" scoped>
 .container1 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-end;
-  gap: 10vw;
+  gap: 2em;
   border-bottom: 1px solid black;
   width: 100%;
   padding: var(--half-padding) 0;
@@ -139,7 +139,6 @@ const handleCategoryClick = (item: (typeof menu.value)[number]) => {
 .parent {
   display: flex;
   flex-direction: column;
-  gap: var(--padding);
   text-align: right;
 }
 
