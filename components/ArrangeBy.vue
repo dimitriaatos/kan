@@ -54,7 +54,8 @@ const menu = computed(() => {
 });
 
 const archiveStore = useArchiveStore();
-const { sortBy, filterBy, isOpen } = storeToRefs(archiveStore);
+const { toggleArrangeBy } = archiveStore;
+const { sortBy, filterBy } = storeToRefs(archiveStore);
 
 const focusedCategory = ref<(typeof menu.value)[number] | null>(null);
 
@@ -82,7 +83,7 @@ const selectChild = (category: (typeof menu.value)[number], index: number) => {
       };
     }
   }
-  isOpen.value = false;
+  toggleArrangeBy(null, false);
 };
 
 const isChildSelected = (
@@ -103,24 +104,7 @@ const focusOnCategory = (item: (typeof menu.value)[number] | null) => {
   focusedCategory.value = item;
 };
 
-const handleCategoryHover = (item: (typeof menu.value)[number]) => {
-  const { matches: isMobile } = window.matchMedia("(hover: hover)");
-  if (isMobile) focusOnCategory(item);
-};
-
 const handleCategoryClick = (item: (typeof menu.value)[number]) => {
-  if (item.type === focusedCategory.value?.type) {
-    focusOnCategory(null);
-    return;
-  }
-  if (getIsTypology(item)) {
-    if (filterBy.value !== null && focusedCategory.value?.type === item.type)
-      filterBy.value = null;
-  } else {
-    if (sortBy.value.type !== defaultSorting.type) {
-      sortBy.value = defaultSorting;
-    }
-  }
   focusOnCategory(item);
 };
 </script>
@@ -159,24 +143,28 @@ const handleCategoryClick = (item: (typeof menu.value)[number]) => {
 
 @media (max-width: 850px) {
   .container1 {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
   .parent {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
   }
 
   .child {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .child.end {
-    align-items: flex-end;
+    align-items: flex-start;
   }
 
   .child.start {
     align-items: flex-start;
+  }
+
+  .parent {
+    text-align: left;
   }
 }
 </style>

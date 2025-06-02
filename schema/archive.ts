@@ -53,6 +53,7 @@ export const getArchiveQuery = (shouldFilter: boolean) => gql`
       description
       slug
       location
+      size
       year
       images {
         directus_files_id {
@@ -92,6 +93,7 @@ export const archiveBySlugQuery = gql`
       slug
       location
       year
+      size
       images {
         directus_files_id {
           id

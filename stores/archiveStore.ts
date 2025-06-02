@@ -5,14 +5,34 @@ import type { Order, Sort, Works } from "~/assets/arrangeBy";
 import { defaultSorting } from "~/assets/common";
 import { archiveSchema, getArchiveQuery, type Archive } from "~/schema";
 
+export enum OpenFrom {
+  Hover,
+  Click,
+}
+type ArrangeByOpen = { state: boolean; from: OpenFrom | null };
+
 export const useArchiveStore = defineStore("archiveStore", () => {
-  const isOpen = ref<boolean>(false);
+  const isOpen = ref<ArrangeByOpen>({
+    state: false,
+    from: null,
+  });
   const sortBy = ref<{ type: Sort; order: Order }>(defaultSorting);
   const filterBy = ref<string | null>(null);
   const parsedWorks = ref<Works>([]);
 
-  const toggleArrangeBy = (state?: boolean) => {
-    isOpen.value = state ?? !isOpen.value;
+  type ToggleArrangeBy = {
+    (callback: (prev: typeof isOpen.value) => typeof isOpen.value): void;
+    (from: ArrangeByOpen["from"], state?: ArrangeByOpen["state"]): void;
+  };
+
+  const toggleArrangeBy: ToggleArrangeBy = (
+    from,
+    state?: ArrangeByOpen["state"]
+  ) => {
+    if (typeof from === "function") {
+      const callback = from;
+      isOpen.value = callback(isOpen.value);
+    } else isOpen.value = { from, state: state ?? !isOpen.value };
   };
 
   const initArchive = async (

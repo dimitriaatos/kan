@@ -1,7 +1,7 @@
 <template>
   <div id="nav" @mouseleave="handleMouseLeave">
     <Nav />
-    <ArrangeBy v-if="isOpen" :typology="typology" />
+    <ArrangeBy v-if="isOpen.state" :typology="typology" />
   </div>
   <div style="height: 8em" />
   <slot />
@@ -27,7 +27,7 @@ const { data: typology } = await useAsyncData("typology", async () => {
 
 const handleMouseLeave = () => {
   // using mouse leave also on touch screens for catching tap outside the menu area
-  toggleArrangeBy(false);
+  toggleArrangeBy(OpenFrom.Hover, false);
 };
 </script>
 

@@ -11,10 +11,18 @@
       <span class="element">
         <button
           v-if="isHome"
-          @click="toggleArrangeBy()"
+          @click="
+            toggleArrangeBy(({ state, from }) => {
+              if (state && from === OpenFrom.Hover) {
+                return { state: true, from: OpenFrom.Click };
+              } else {
+                return { state: !state, from: OpenFrom.Click };
+              }
+            })
+          "
           @mouseover="handleMouseOver"
           class="h2size clickable"
-          :class="{ selected: isOpen }"
+          :class="{ selected: isOpen.state }"
         >
           Arrange by
         </button>
@@ -32,8 +40,9 @@ const { isOpen } = storeToRefs(archiveStore);
 
 const handleMouseOver = () => {
   const { matches: isMobile } = window.matchMedia("(hover: hover)");
+  console.log(isMobile);
   if (isMobile) {
-    toggleArrangeBy(true);
+    toggleArrangeBy(OpenFrom.Hover, true);
   }
 };
 </script>
