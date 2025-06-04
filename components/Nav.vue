@@ -1,7 +1,11 @@
 <template>
   <div>
     <nav>
-      <span class="navigation" :class="{ hideOnMobile: !isBurgerOpen }">
+      <span
+        class="navigation"
+        :class="{ hideOnMobile: !isBurgerOpen }"
+        @mouseover="toggleArrangeBy(OpenFrom.Hover, false)"
+      >
         <NuxtLink
           v-if="isHome"
           class="h2size clickable"
@@ -39,7 +43,16 @@
       </span>
       <Circle class="burgerButton" color="green" @click="toggleBurger()" />
     </nav>
-    <div class="overlay" @click="toggleBurger(false)" v-if="isBurgerOpen" />
+    <div
+      class="overlay"
+      @click="
+        () => {
+          toggleBurger(false);
+          toggleArrangeBy(OpenFrom.Click, false);
+        }
+      "
+      v-if="isBurgerOpen"
+    />
   </div>
 </template>
 
@@ -65,6 +78,13 @@ nav {
   grid-template-rows: auto;
   padding: var(--padding) 0;
   grid-template-areas: "navigation title arrangeBy";
+}
+
+span > * {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: left;
 }
 
 .navigation {
@@ -122,6 +142,7 @@ a {
   .arrangeBy {
     padding-top: 0.5em;
     justify-self: start;
+    width: 100%;
   }
 
   nav {
