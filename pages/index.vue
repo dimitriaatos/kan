@@ -10,7 +10,8 @@
     style="position: relative"
     @click="!work.open && !isMobile && toggleAccordion(index, true)"
   >
-    <Close
+    <Circle
+      color="red"
       v-if="work.open"
       class="close"
       @click="(e: MouseEvent) => { handleCloseButton(e, index) }"

@@ -54,7 +54,7 @@ const menu = computed(() => {
 });
 
 const archiveStore = useArchiveStore();
-const { toggleArrangeBy } = archiveStore;
+const { toggleArrangeBy, toggleBurger } = archiveStore;
 const { sortBy, filterBy } = storeToRefs(archiveStore);
 
 const focusedCategory = ref<(typeof menu.value)[number] | null>(null);
@@ -84,6 +84,7 @@ const selectChild = (category: (typeof menu.value)[number], index: number) => {
     }
   }
   toggleArrangeBy(null, false);
+  toggleBurger(false);
 };
 
 const isChildSelected = (

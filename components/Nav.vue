@@ -1,14 +1,24 @@
 <template>
   <div>
     <nav>
-      <span class="element">
-        <NuxtLink v-if="isHome" class="h2size clickable" to="/about"
-          >About</NuxtLink
+      <span class="navigation" :class="{ hideOnMobile: !isBurgerOpen }">
+        <NuxtLink
+          v-if="isHome"
+          class="h2size clickable"
+          to="/about"
+          @click="toggleBurger(false)"
+          >about</NuxtLink
         >
-        <NuxtLink v-else class="h2size clickable" to="/">Archive</NuxtLink>
+        <NuxtLink
+          v-else
+          class="h2size clickable"
+          to="/"
+          @click="toggleBurger(false)"
+          >archive</NuxtLink
+        >
       </span>
-      <h1 class="element">KAN</h1>
-      <span class="element">
+      <h1 class="title">KAN</h1>
+      <span class="arrangeBy" :class="{ hideOnMobile: !isBurgerOpen }">
         <button
           v-if="isHome"
           @click="
@@ -24,10 +34,12 @@
           class="h2size clickable"
           :class="{ selected: isOpen.state }"
         >
-          Arrange by
+          arrange by
         </button>
       </span>
+      <Circle class="burgerButton" color="green" @click="toggleBurger()" />
     </nav>
+    <div class="overlay" @click="toggleBurger(false)" v-if="isBurgerOpen" />
   </div>
 </template>
 
@@ -35,12 +47,11 @@
 const route = useRoute();
 const isHome = computed(() => route.path === "/");
 const archiveStore = useArchiveStore();
-const { toggleArrangeBy } = archiveStore;
-const { isOpen } = storeToRefs(archiveStore);
+const { toggleArrangeBy, toggleBurger } = archiveStore;
+const { isOpen, isBurgerOpen } = storeToRefs(archiveStore);
 
 const handleMouseOver = () => {
   const { matches: isMobile } = window.matchMedia("(hover: hover)");
-  console.log(isMobile);
   if (isMobile) {
     toggleArrangeBy(OpenFrom.Hover, true);
   }
@@ -51,23 +62,84 @@ const handleMouseOver = () => {
 nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  align-items: center;
+  grid-template-rows: auto;
   padding: var(--padding) 0;
+  grid-template-areas: "navigation title arrangeBy";
 }
 
-.element:first-child {
+.navigation {
+  grid-area: navigation;
   justify-self: start;
 }
 
-.element:nth-child(2) {
+.title {
+  grid-area: title;
   justify-self: center;
 }
 
-.element:last-child {
+.arrangeBy {
+  grid-area: arrangeBy;
   justify-self: end;
 }
 
 a {
   user-select: none;
+}
+
+.burgerButton {
+  grid-area: burgerButton;
+  display: none;
+}
+
+.hideOnMobile {
+  display: block;
+}
+
+.overlay {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .burgerButton {
+    display: block;
+    justify-self: end;
+  }
+
+  .hideOnMobile {
+    display: none;
+  }
+
+  .navigation {
+    border-bottom: 1px solid black;
+    width: 100%;
+  }
+
+  .navigation {
+    align-self: end;
+    padding-bottom: 0.5em;
+  }
+
+  .arrangeBy {
+    padding-top: 0.5em;
+    justify-self: start;
+  }
+
+  nav {
+    grid-template-areas:
+      ". title burgerButton"
+      "navigation navigation navigation"
+      "arrangeBy arrangeBy arrangeBy";
+    padding-bottom: 0;
+  }
+
+  .overlay {
+    display: block;
+    z-index: -1;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 }
 </style>

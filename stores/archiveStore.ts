@@ -20,6 +20,13 @@ export const useArchiveStore = defineStore("archiveStore", () => {
   const filterBy = ref<string | null>(null);
   const parsedWorks = ref<Works>([]);
 
+  const isBurgerOpen = ref(false);
+
+  const toggleBurger = (state?: boolean) => {
+    if (state !== undefined) isBurgerOpen.value = state;
+    else isBurgerOpen.value = !isBurgerOpen.value;
+  };
+
   type ToggleArrangeBy = {
     (callback: (prev: typeof isOpen.value) => typeof isOpen.value): void;
     (from: ArrangeByOpen["from"], state?: ArrangeByOpen["state"]): void;
@@ -70,5 +77,8 @@ export const useArchiveStore = defineStore("archiveStore", () => {
     toggleArrangeBy,
     sortBy,
     filterBy,
+
+    isBurgerOpen,
+    toggleBurger,
   };
 });

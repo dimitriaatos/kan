@@ -7,16 +7,16 @@
       id="close"
       class="clickable"
     >
-      <div />
+      <div :style="{ backgroundColor: color }" />
     </NuxtLink>
     <button @click="handleClick" id="close" class="clickable" v-else>
-      <div />
+      <div :style="{ backgroundColor: color }" />
     </button>
   </div>
 </template>
 
 <script lang="ts" setup>
-defineProps<{ to?: string }>();
+defineProps<{ to?: string; color: string }>();
 const emit = defineEmits<(e: "click", event: MouseEvent) => void>();
 
 const handleClick = (event: MouseEvent) => {

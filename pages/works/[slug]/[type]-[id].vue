@@ -17,7 +17,7 @@
       >
         <div class="goto" />
       </ConditionalLink>
-      <Close @click="handleClose" class="close" />
+      <Circle color="red" @click="handleClose" class="close" />
     </div>
     <div id="gallery">
       <img
