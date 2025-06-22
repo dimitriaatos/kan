@@ -1,3 +1,5 @@
 # KAN
 
-Tech used: Nuxt, Vue, Pinia, Directus, Zod
+A portfolio website, designed by [Angelina Stavela](https://angelinastavela.work).
+
+Technologies used: Nuxt, Vue, Pinia, Directus, Zod
